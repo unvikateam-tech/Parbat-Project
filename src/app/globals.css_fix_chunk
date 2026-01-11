@@ -1,0 +1,368 @@
+.headline-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  /* Reduced from 5rem */
+}
+
+.squiggle-line {
+  width: clamp(300px, 50vw, 600px);
+  /* Even bigger */
+  height: 30px;
+  opacity: 0.95;
+}
+
+.squiggle-line path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawSquiggle 1.5s cubic-bezier(0.4, 0, 0.2, 1) 1.5s forwards;
+}
+
+@keyframes drawSquiggle {
+  from {
+    stroke-dashoffset: 1000;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .loop-decoration {
+    width: 150px;
+    height: 150px;
+    top: 50%;
+  }
+
+  .loop-text-content {
+    font-size: 16px;
+  }
+
+  .hero-video-centered {
+    max-width: 100%;
+    width: 100%;
+    padding: 0 1rem;
+    margin: 2rem auto 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .loop-decoration {
+    display: none;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+.benefit-section {
+  padding: 2rem 2rem 8rem;
+  /* Reduced top padding */
+  background: var(--primary-bg);
+  position: relative;
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .benefit-section {
+    padding: 2rem 1.5rem;
+  }
+
+  .benefit-header {
+    margin-bottom: 2rem;
+  }
+}
+
+.benefit-container {
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+.benefit-header {
+  text-align: left;
+  margin-bottom: 4rem;
+  padding-left: 1rem;
+}
+
+.benefit-tag {
+  color: #7F00FF;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.benefit-main-title {
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin-top: 0.5rem;
+  letter-spacing: -1.5px;
+  line-height: 1;
+}
+
+.benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.benefit-card-vertical {
+  width: 100%;
+}
+
+/* Staggered offsets for the "little vertically stacked" look */
+.card-stagger-0 {
+  transform: translateY(0);
+}
+
+.card-stagger-1 {
+  transform: translateY(30px);
+}
+
+.card-stagger-2 {
+  transform: translateY(60px);
+}
+
+.benefit-card-inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 520px;
+  /* Reduced from 650px */
+  padding: 1.8rem;
+  /* Reduced padding */
+  border-radius: 4px;
+  /* Industrial sharper edges like the img */
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  overflow: hidden;
+}
+
+.benefit-card-inner:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.card-illustration-top {
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Centered for Lottie */
+  margin-bottom: 2rem;
+}
+
+.lottie-emoji-container {
+  width: 100%;
+  max-width: 120px;
+  /* Controlled size */
+  height: 120px;
+}
+
+.lottie-placeholder {
+  width: 120px;
+  height: 120px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+}
+
+.card-content-vertical {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex: 1;
+}
+
+.card-title-bold {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -1.5px;
+  margin-bottom: 2rem;
+  text-transform: none;
+  /* Stay natural but bold */
+}
+
+.card-description-alt {
+  font-size: 1rem;
+  line-height: 1.4;
+  font-weight: 600;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.8);
+  margin-bottom: auto;
+}
+
+.card-footer-alt {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.8);
+}
+
+.card-stats-row-alt {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.stats-number-bold {
+  display: block;
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.stats-label-bold {
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.card-arrow-icon svg {
+  width: 35px;
+  height: 35px;
+}
+
+.card-link-alt {
+  font-size: 1rem;
+  font-weight: 800;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .benefit-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .benefit-card-vertical {
+    transform: none !important;
+  }
+
+  .benefit-card-inner {
+    min-height: auto;
+    padding: 1.5rem;
+  }
+
+  .card-illustration-top {
+    height: 120px;
+    margin-bottom: 1.5rem;
+  }
+
+  .lottie-emoji-container {
+    max-width: 100px;
+    height: 100px;
+  }
+
+  .card-title-bold {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    margin-bottom: 1.5rem;
+  }
+
+  .card-description-alt {
+    font-size: 0.9rem;
+    padding-top: 1.2rem;
+  }
+
+  .stats-number-bold {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .benefit-grid {
+    gap: 2rem;
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  .benefit-card-inner {
+    padding: 1.25rem;
+  }
+
+  .card-illustration-top {
+    height: 100px;
+    margin-bottom: 1.2rem;
+  }
+
+  .lottie-emoji-container {
+    max-width: 80px;
+    height: 80px;
+  }
+
+  .card-title-bold {
+    font-size: 1.4rem;
+    margin-bottom: 1.2rem;
+    letter-spacing: -1px;
+  }
+
+  .card-description-alt {
+    font-size: 0.85rem;
+    padding-top: 1rem;
+  }
+
+  .card-footer-alt {
+    margin-top: 1.5rem;
+    padding-top: 1.2rem;
+  }
+
+  .stats-number-bold {
+    font-size: 2.2rem;
+  }
+
+  .stats-label-bold {
+    font-size: 0.85rem;
+  }
+
+  .card-arrow-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .card-link-alt {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .benefit-grid {
+    max-width: 85%;
+  }
+
+  .benefit-card-inner {
+    padding: 1.1rem;
+  }
+
+  .card-illustration-top {
+    height: 85px;
+    margin-bottom: 1rem;
+  }
+
+  .lottie-emoji-container {
+    max-width: 70px;
+    height: 70px;
+  }
+
+  .card-title-bold {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .card-description-alt {
+    font-size: 0.8rem;
+  }
+
+  .stats-number-bold {
+    font-size: 2rem;
+  }
+
+  .card-arrow-icon svg {
+    width: 25px;
+    height: 25px;
+  }
+}

@@ -1,0 +1,321 @@
+.faq-section {
+    padding: 2rem 2rem 2rem;
+    position: relative;
+    overflow: visible;
+    font-family: var(--font-inter), sans-serif;
+    min-height: 400px;
+}
+
+/* Background ambient glow */
+.faq-section::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(127, 0, 255, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.faq-container {
+    max-width: 1100px;
+    /* Wider for grid */
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.faq-header {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.section-tag {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 100px;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.section-title {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    font-family: var(--font-barlow), sans-serif;
+}
+
+.highlight-text {
+    background: linear-gradient(90deg, #F4D35E, #EE6147);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* FAQ Grid Layout */
+.faq-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.faq-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    position: relative;
+}
+
+/* Gradient Border Trick using pseudo-element */
+.faq-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 1px;
+    /* Border width */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    opacity: 0.5;
+}
+
+.faq-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+    transform: translateY(-2px);
+}
+
+/* Active State Design */
+.faq-item.open {
+    background: rgba(10, 5, 20, 0.6);
+    /* Darker backdrop */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.faq-item.open::before {
+    background: linear-gradient(135deg, #F4D35E, #EE6147, #7F00FF);
+    opacity: 1;
+}
+
+/* Inner Glow for active state */
+.faq-item.open::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top left, rgba(244, 211, 94, 0.05), transparent 40%);
+    pointer-events: none;
+}
+
+.faq-question {
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.faq-question h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+    padding-right: 2rem;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+}
+
+.faq-item.open .faq-question h3 {
+    color: #fff;
+}
+
+/* Custom Animated Icon */
+.faq-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Bouncy */
+    flex-shrink: 0;
+}
+
+.faq-item.open .faq-icon {
+    background: #fff;
+    color: #000;
+    transform: rotate(45deg);
+    /* Spin to X */
+}
+
+.faq-answer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 0 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+.faq-item.open .faq-answer {
+    grid-template-rows: 1fr;
+    padding-bottom: 2rem;
+}
+
+.answer-inner {
+    overflow: hidden;
+}
+
+.faq-answer p {
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.7;
+    margin: 0;
+    font-weight: 400;
+    overflow: hidden;
+    /* Ensure content is hidden when closed */
+}
+
+/* Footer */
+.faq-footer {
+    margin-top: 2.5rem;
+    text-align: center;
+}
+
+.faq-footer p {
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 0.5rem;
+}
+
+.contact-link {
+    color: #EE6147;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.contact-link:hover {
+    color: #F4D35E;
+    text-decoration: underline;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+    .faq-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .faq-question {
+        padding: 1.5rem;
+    }
+
+    .faq-answer {
+        padding: 0 1.5rem;
+    }
+
+    .faq-item.open .faq-answer {
+        padding-bottom: 1.5rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .faq-section {
+        padding-bottom: 0.5rem;
+    }
+}
+
+/* --- New Simple Animations --- */
+
+@keyframes faqFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.faq-header,
+.faq-item,
+.faq-footer {
+    opacity: 0;
+}
+
+.faq-section.visible .faq-header {
+    animation: faqFadeInUp 0.8s ease forwards;
+}
+
+.faq-section.visible .faq-item {
+    animation: faqFadeInUp 0.6s ease forwards;
+}
+
+.faq-section.visible .faq-footer {
+    animation: faqFadeInUp 0.8s ease forwards;
+    animation-delay: 0.4s;
+}
+
+/* Staggering the FAQ items */
+.faq-section.visible .faq-item:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.faq-section.visible .faq-item:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.faq-section.visible .faq-item:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.faq-section.visible .faq-item:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.faq-section.visible .faq-item:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.faq-section.visible .faq-item:nth-child(6) {
+    animation-delay: 0.6s;
+}

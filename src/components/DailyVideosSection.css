@@ -1,0 +1,327 @@
+/* DailyVideosSection.css */
+.daily-video-section {
+    position: relative;
+    padding: 60px 20px;
+    /* Reduced space before section */
+    background: #050505;
+    overflow: hidden;
+}
+
+.dv-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.dv-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 40px;
+    padding: 60px;
+    /* Reduced internal padding */
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 50px;
+    /* Reduced gap between components */
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(15px);
+}
+
+.dv-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    /* Slightly increased for a "little little" space */
+    position: relative;
+    z-index: 5;
+}
+
+.dv-title {
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    /* Slightly smaller font */
+    line-height: 1.05;
+    /* Tightened line height */
+    font-weight: 800;
+    color: white;
+    letter-spacing: -1px;
+    margin: 0;
+    /* Removed default margin */
+}
+
+.highlight-text {
+    background: linear-gradient(135deg, #6600ff, #aa66ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.dv-description {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 440px;
+    margin: 0;
+    /* Removed default margin */
+}
+
+.dv-newsletter-form {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    max-width: 450px;
+}
+
+.dv-input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 16px 20px;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.dv-input:focus {
+    border-color: #6600ff;
+    background: rgba(102, 0, 255, 0.08);
+}
+
+.dv-subscribe-btn {
+    background: #6600ff;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 0 28px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dv-subscribe-btn:hover {
+    background: #7a1aff;
+    transform: translateY(-2px);
+}
+
+.message {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+.message.success {
+    color: #00ff88;
+    background: rgba(0, 255, 136, 0.1);
+}
+
+.message.error {
+    color: #ff4444;
+    background: rgba(255, 68, 68, 0.1);
+}
+
+/* Video Wrapper */
+.dv-video-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* Call to action arrow nearer to video */
+.dv-video-wrapper .scribble-arrow {
+    position: absolute;
+    top: -55px;
+    /* Adjusted to fit new curve */
+    left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 10;
+}
+
+.scribble-text {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #6600ff;
+}
+
+.dv-video-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #000;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* Black fade on video area which disappears on hover */
+.dv-video-frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.95), transparent 70%);
+    pointer-events: none;
+    z-index: 3;
+    transition: opacity 0.5s ease, visibility 0.5s;
+}
+
+.dv-video-frame:hover::after,
+.playing .dv-video-frame::after {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.vimeo-embed {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.playing .vimeo-embed {
+    opacity: 1;
+}
+
+.dv-play-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+/* Ultra-premium purple glassmorphism play button */
+/* Message Toast */
+.message {
+    margin-top: 15px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.message.success {
+    background: rgba(0, 255, 136, 0.1);
+    color: #00ff88;
+    border: 1px solid rgba(0, 255, 136, 0.2);
+}
+
+.message.error {
+    background: rgba(255, 68, 68, 0.1);
+    color: #ff4444;
+    border: 1px solid rgba(255, 68, 68, 0.2);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dv-play-btn-capsule {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: linear-gradient(135deg, rgba(255, 107, 74, 0.45), rgba(255, 150, 100, 0.45));
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    color: white;
+    padding: 16px 36px;
+    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    font-weight: 800;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow:
+        0 15px 35px var(--orange-glow),
+        inset 0 0 15px rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    animation: glass-pulse 3s infinite ease-in-out;
+}
+
+@keyframes glass-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 15px 35px var(--orange-glow), inset 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+
+    50% {
+        box-shadow: 0 20px 50px var(--orange-glow), inset 0 0 25px rgba(255, 255, 255, 0.2);
+    }
+}
+
+.dv-play-btn-capsule:hover {
+    background: linear-gradient(135deg, rgba(255, 107, 74, 0.8), rgba(255, 150, 100, 0.8));
+    transform: scale(1.1) translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Shimmer Effect */
+.dv-play-btn-capsule::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transform: rotate(45deg);
+    transition: all 0.6s;
+    pointer-events: none;
+}
+
+.dv-play-btn-capsule:hover::before {
+    left: 100%;
+}
+
+.dv-play-icon {
+    width: 26px;
+    height: 26px;
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.6));
+}
+
+.video-glow {
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(circle, rgba(102, 0, 255, 0.2) 0%, transparent 70%);
+    z-index: -1;
+    filter: blur(30px);
+}
+
+@media (max-width: 1024px) {
+    .dv-card {
+        grid-template-columns: 1fr;
+        padding: 40px;
+        gap: 60px;
+    }
+
+    .dv-content {
+        text-align: center;
+        align-items: center;
+    }
+
+    .dv-video-wrapper .scribble-arrow {
+        top: -35px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .dv-video-frame::after {
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+    }
+}

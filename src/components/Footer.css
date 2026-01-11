@@ -1,0 +1,231 @@
+.footer {
+    background: #050505;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 3rem 2rem 2rem;
+    font-family: var(--font-inter), sans-serif;
+    position: relative;
+    z-index: 10;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 4rem;
+    margin-bottom: 4rem;
+}
+
+/* Brand Column */
+.footer-brand {
+    max-width: 300px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+    margin-bottom: 1.5rem;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #fff;
+    font-family: var(--font-main), sans-serif;
+    letter-spacing: -0.05em;
+}
+
+.footer-tagline {
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+}
+
+/* Social Icons */
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.social-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Brand Colors on Hover */
+.social-icon:hover {
+    color: #fff;
+    transform: translateY(-3px);
+}
+
+.social-icon.fb:hover {
+    background: #1877F2;
+    border-color: #1877F2;
+}
+
+.social-icon.yt:hover {
+    background: #FF0000;
+    border-color: #FF0000;
+}
+
+.social-icon.ig:hover {
+    background: #E1306C;
+    border-color: #E1306C;
+}
+
+.social-icon.li:hover {
+    background: #0077B5;
+    border-color: #0077B5;
+}
+
+/* Links Grid */
+.footer-links-grid {
+    display: flex;
+    gap: 4rem;
+    flex-wrap: wrap;
+}
+
+.links-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.links-group h4 {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.links-group a {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.links-group a:hover {
+    color: #7F00FF;
+}
+
+/* Bottom Bar */
+.footer-bottom {
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+}
+
+.footer-bottom p {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.9rem;
+}
+
+/* Responsive Header/Footer refinements */
+@media (max-width: 768px) {
+    .footer {
+        padding: 3rem 1.5rem 1.5rem;
+        text-align: center;
+    }
+
+    .footer-top {
+        flex-direction: column;
+        align-items: center;
+        gap: 3rem;
+        margin-bottom: 2.5rem;
+        /* Reduced from 4rem */
+    }
+
+    .footer-bottom {
+        padding-top: 1.5rem;
+        /* Reduced from 2rem */
+    }
+
+    .footer-brand {
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-logo {
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .footer-tagline {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 280px;
+        margin-bottom: 2rem;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    .footer-links-grid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        /* 2x2 grid for common links */
+        gap: 2.5rem 1rem;
+        justify-items: center;
+    }
+
+    .links-group {
+        width: 100%;
+        text-align: center;
+        align-items: center;
+    }
+
+    .links-group h4 {
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+    }
+
+    .links-group a {
+        padding: 0.4rem 0;
+        display: block;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-links-grid {
+        grid-template-columns: 1fr;
+        /* Single column on very small screens */
+        gap: 2.5rem;
+    }
+}
+
+/* Subtle Logo Glow */
+.logo-image-new {
+    filter: drop-shadow(0 0 8px rgba(127, 0, 255, 0.2));
+    transition: all 0.3s ease;
+}
+
+.logo-image-new:hover {
+    filter: drop-shadow(0 0 12px rgba(127, 0, 255, 0.4));
+    transform: scale(1.1);
+}
