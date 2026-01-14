@@ -18,13 +18,13 @@ const barlow = Barlow({
 
 export const metadata: Metadata = {
     title: {
-        default: "Unvika | Premium AI Automation & Marketing for Nepali SMEs",
-        template: "%s | Unvika"
+        default: "Parbat Raj Paudel | Tech Sales Funnel Expert & Strategist",
+        template: "%s | Parbat Raj Paudel"
     },
-    description: "Scale your local business in Nepal for just 5,000 NPR/month. Functional working websites, Google optimization, lead automation, and 24/7 AI support for Nepali SMEs.",
-    keywords: ["AI Automation Nepal", "SME Marketing Nepal", "Lead Generation Nepal", "Nepali Business Growth", "Affordable Web Design Nepal", "Google Business Optimization Nepal", "Best AI Agency Nepal", "Digital Transformation Nepal"],
-    authors: [{ name: "Unvika Team" }],
-    creator: "Unvika",
+    description: "I help businesses build and optimize high-converting sales funnels. From first touchpoint to final payment, I ensure your system maximizes revenue.",
+    keywords: ["Parbat Raj Paudel", "Tech Sales Funnel Expert", "Sales Funnel Strategist", "Funnel Audit Nepal", "Lead Generation Expert", "Conversion Rate Optimization", "Sales Funnel Engineering"],
+    authors: [{ name: "Parbat Raj Paudel" }],
+    creator: "Parbat Raj Paudel",
     publisher: "Unvika",
     formatDetection: {
         email: false,
@@ -32,27 +32,28 @@ export const metadata: Metadata = {
         telephone: false,
     },
     openGraph: {
-        title: "Unvika | Premium AI Automation & Marketing for Nepali SMEs",
-        description: "Join 70+ local businesses growing with Unvika's 5,000 NPR/month growth package. AI-powered websites, lead automation, and 24/7 support.",
+        title: "Parbat Raj Paudel | Tech Sales Funnel Expert",
+        description: "Build and optimize high-converting sales funnels with Parbat Raj Paudel. From first touchpoint to final payment, I ensure your system maximizes revenue.",
         url: 'https://unvika.com',
-        siteName: 'Unvika',
+        siteName: 'Parbat Raj Paudel',
         locale: 'en_NP',
         type: 'website',
         images: [
             {
-                url: '/og-image.png', // Ensure this image exists in public folder
+                url: '/og-image.png',
                 width: 1200,
                 height: 630,
-                alt: 'Unvika - Empowering Nepali SMEs',
+                alt: 'Parbat Raj Paudel - Sales Funnel Specialist',
             },
         ],
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Unvika | Scale Your Nepali SME',
-        description: "Scale your local business in Nepal for just 5,000 NPR/month with Unvika's AI-powered growth tools.",
+        title: 'Parbat Raj Paudel | Tech Sales Funnel Expert',
+        description: "Build a predictable revenue engine with tech-driven sales funnels engineered by Parbat Raj Paudel.",
         images: ['/og-image.png'],
     },
+    // ... robots remains the same
     robots: {
         index: true,
         follow: true,
@@ -67,6 +68,7 @@ export const metadata: Metadata = {
 };
 
 import ChatBot from "../components/ChatBot";
+import Analytics from "../components/Analytics";
 
 export default function RootLayout({
     children,
@@ -77,9 +79,16 @@ export default function RootLayout({
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "Unvika",
+        "alternateName": "Parbat Raj Paudel",
         "url": "https://unvika.com",
         "logo": "https://unvika.com/unvika-logo.png",
-        "description": "Premium AI Automation & Marketing for Nepali SMEs. Affordable growth engines for just 5,000 NPR/month.",
+        "description": "Tech-driven sales funnel engineering and conversion optimization led by specialist Parbat Raj Paudel.",
+        "founder": {
+            "@type": "Person",
+            "name": "Parbat Raj Paudel",
+            "jobTitle": "Tech Sales Funnel Expert",
+            "url": "https://unvika.com/about"
+        },
         "address": {
             "@type": "PostalAddress",
             "addressCountry": "NP"
@@ -89,13 +98,6 @@ export default function RootLayout({
             "contactType": "customer support",
             "areaServed": "NP",
             "availableLanguage": ["English", "Nepali"]
-        },
-        "offers": {
-            "@type": "Offer",
-            "name": "SME Growth Plan",
-            "price": "5000",
-            "priceCurrency": "NPR",
-            "description": "Includes functional website, Google Business optimization, lead automation, and 24/7 AI support."
         }
     };
 
@@ -116,6 +118,7 @@ export default function RootLayout({
                 <div className="bg-spotlight bg-spotlight-3"></div>
                 <div className="bg-spotlight bg-spotlight-4"></div>
                 {children}
+                <Analytics />
                 <ChatBot />
             </body>
         </html>
