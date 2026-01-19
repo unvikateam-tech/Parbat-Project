@@ -1,86 +1,77 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Prevent scroll when menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
 
   return (
     <>
       <header className="app-header">
         <div className="pill-nav-container">
-          <div className="header-logo">
-            <span className="logo-text">parbat</span>
-            <div className="logo-underscore-wrapper">
-              <span className="logo-underscore">_</span>
-              <img src="/web-logo.png" alt="Logo" className="logo-image-new" />
-            </div>
-          </div>
-
-          {/* Desktop Navigation */}
-          <nav className="main-nav desktop-nav">
-            <ul className="nav-menu">
-              <li><a href="/">Home</a></li>
-              <li><a href="/#services">Services</a></li>
-              <li><a href="/portfolio">Portfolio</a></li>
-              <li><a href="/contact">Partner With Me</a></li>
-            </ul>
-          </nav>
-
-          {/* Desktop Buttons */}
-          <div className="nav-buttons desktop-buttons">
-            <a href="https://www.youtube.com/@unvika" target="_blank" rel="noopener noreferrer" className="nav-btn youtube-btn">
-              <span className="btn-text">YouTube</span>
+          <div className="pill-main-row">
+            {/* Logo on the left */}
+            <a href="/" className="header-logo">
+              <div className="logo-brand-details">
+                <span className="brand-name">
+                  PARBAT<span style={{ color: 'var(--brand-pink)' }}>_</span>
+                </span>
+              </div>
             </a>
-            <a href="/packages#newsletter" className="nav-btn newsletter-btn">
-              <span className="btn-text">Newsletter</span>
-            </a>
-          </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="menu-toggle"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-          >
-            {menuOpen ? 'Close' : 'Menu'}
-          </button>
+            {/* Menu button on the right - Hamburger/Cross Icon */}
+            <button
+              className={`menu-btn ${menuOpen ? 'open' : ''}`}
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Toggle menu"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="4" y1="6" x2="20" y2="6" className="line top"></line>
+                <line x1="4" y1="12" x2="20" y2="12" className="line middle"></line>
+                <line x1="4" y1="18" x2="20" y2="18" className="line bottom"></line>
+              </svg>
+            </button>
+          </div>
         </div>
       </header>
 
-      {/* Mobile Full Screen Menu */}
+      {/* Full Screen Menu Overlay */}
       <div className={`mobile-menu-overlay ${menuOpen ? 'active' : ''}`}>
-        <div className="mobile-menu-header">
-          <div className="mobile-logo">
-            <span className="logo-text">parbat</span>
-            <div className="logo-underscore-wrapper">
-              <span className="logo-underscore">_</span>
-              <img src="/web-logo.png" alt="Logo" className="logo-image-new" />
-            </div>
-          </div>
-          <button
-            className="mobile-close-btn"
-            onClick={() => setMenuOpen(false)}
-            aria-label="Close menu"
-          >
-            Close
-          </button>
-        </div>
-
-        <nav className="mobile-nav">
+        <div className="mobile-nav">
           <ul className="mobile-nav-menu">
             <li><a href="/" onClick={() => setMenuOpen(false)}>Home</a></li>
-            <li><a href="/#services" onClick={() => setMenuOpen(false)}>Services</a></li>
+            <li><a href="/faq" onClick={() => setMenuOpen(false)}>FAQ</a></li>
             <li><a href="/portfolio" onClick={() => setMenuOpen(false)}>Portfolio</a></li>
-            <li><a href="/contact" onClick={() => setMenuOpen(false)}>Partner With Me</a></li>
+            <li><a href="/contact" onClick={() => setMenuOpen(false)}>Contact</a></li>
           </ul>
-        </nav>
+        </div>
 
         <div className="mobile-buttons">
           <a href="https://www.youtube.com/@unvika" target="_blank" rel="noopener noreferrer" className="mobile-btn youtube-mobile-btn" onClick={() => setMenuOpen(false)}>
             YouTube
           </a>
-          <a href="#newsletter" className="mobile-btn newsletter-mobile-btn" onClick={() => setMenuOpen(false)}>
-            Newsletter
+          <a href="/contact" className="mobile-btn newsletter-mobile-btn" onClick={() => setMenuOpen(false)}>
+            Partner With Me
           </a>
         </div>
       </div>

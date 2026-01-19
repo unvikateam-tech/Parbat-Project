@@ -1,33 +1,178 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@400;700;800&display=swap');
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 :root {
-  --font-main: 'Outfit', 'Inter', system-ui, sans-serif;
+  --font-main: var(--font-outfit), 'Inter', system-ui, sans-serif;
+  --font-header: "roc-grotesk", "Archivo", sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   line-height: 1.5;
   font-weight: 400;
 
-  /* Unvika Premium Palette - Enhanced with 100x Inspiration */
-  --primary-bg: #000000;
-  --secondary-bg: #050505;
-  --primary-purple: #7F00FF;
-  --vibrant-orange: #FF6B4A;
-  /* 100x Inspired */
-  --purple-glow: rgba(127, 0, 255, 0.3);
-  --orange-glow: rgba(255, 107, 74, 0.3);
-  --electric-green: #22C55E;
-  --text-white: #FFFFFF;
-  --text-muted: rgba(255, 255, 255, 0.6);
-  --glass-bg: rgba(10, 10, 10, 0.6);
-  --border-color: rgba(255, 255, 255, 0.08);
+  /* Fireship Inspired Dark Palette */
+  --primary-bg: #02050C;
+  /* Deep Midnight Blue/Black (MrBeast) */
+  --secondary-bg: #0a0d14;
+  /* Slightly lighter for gradients */
+
+  /* Accents */
+  --brand-pink: #FF248F;
+  /* UPDATED NEON PINK */
+  --brand-yellow: var(--brand-pink);
+  /* Mapped to pink */
+  --brand-blue: #00C2EE;
+  /* CYAN BLUE */
+  --brand-green: #0ba95b;
+  /* Success/Card Accent */
+
+  /* Mapping to existing variables for compatibility */
+  --primary-purple: var(--brand-pink);
+  --vibrant-orange: var(--brand-pink);
+
+  --purple-glow: rgba(255, 36, 143, 0.35);
+  --orange-glow: rgba(255, 36, 143, 0.35);
+  /* Pink Glow */
+
+  --electric-green: var(--brand-green);
+
+  /* Text */
+  --text-white: #ffffff;
+  --text-muted: #a1a1aa;
+  /* Neutral Grey */
+
+  --glass-bg: rgba(20, 20, 20, 0.8);
+  --border-color: rgba(255, 255, 255, 0.1);
 
   color: var(--text-white);
   background-color: var(--primary-bg);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --nav-width: 88%;
+  --nav-max-width: 400px;
+}
+
+/* CRITICAL HEADER STYLES (Consolidated to prevent conflicts) */
+.app-header {
+  position: fixed;
+  top: 30px;
+  /* Moved down by 5px more */
+  top: calc(30px + env(safe-area-inset-top));
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: 20005 !important;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  pointer-events: none;
+  overflow: visible;
+  padding: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+@media (max-width: 1023px) {
+  .app-header {
+    top: 35px !important;
+    top: calc(35px + env(safe-area-inset-top)) !important;
+  }
+}
+
+.pill-nav-container {
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1.25rem;
+  background: rgba(15, 13, 14, 0.95);
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  height: 48px;
+  /* Default height */
+  width: var(--nav-width);
+  max-width: var(--nav-max-width);
+  position: relative;
+  /* Centered by .app-header flexbox */
+  flex-shrink: 0;
+  pointer-events: auto !important;
+  box-sizing: border-box;
+  overflow: hidden;
+  /* Hide content when collapsed */
+  z-index: 20010;
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: height, background;
+}
+
+.pill-nav-container.menu-expanded {
+  height: auto;
+  padding-bottom: 2rem;
+}
+
+.pill-main-row {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.pill-expanded-content {
+  width: 100%;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.menu-expanded .pill-expanded-content {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  margin-top: 0.5rem;
+}
+
+@media (min-width: 1024px) {
+  .pill-nav-container {
+    width: var(--nav-width);
+    max-width: var(--nav-max-width);
+    height: 44px;
+    border-radius: 20px !important;
+    min-width: 0;
+  }
+
+  .pill-main-row {
+    height: 44px;
+  }
+}
+
+@media (max-width: 768px) {
+  .pill-nav-container {
+    width: var(--nav-width) !important;
+    max-width: var(--nav-max-width) !important;
+    border-radius: 20px !important;
+    height: 42px;
+    padding: 0 1rem;
+  }
+
+  .pill-nav-container.menu-expanded {
+    height: auto;
+    padding-bottom: 1.5rem;
+  }
+
+  .pill-main-row {
+    height: 42px;
+  }
 }
 
 a {
@@ -52,6 +197,7 @@ body {
 }
 
 /* Background Spotlights & Grid */
+/* Background Spotlights & Grid - Dark Mode Tweaks */
 .bg-grid {
   position: fixed;
   top: 0;
@@ -59,8 +205,8 @@ body {
   width: 100%;
   height: 100%;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 50px 50px;
   pointer-events: none;
   z-index: 0;
@@ -70,12 +216,14 @@ body {
   position: fixed;
   width: 50vw;
   height: 50vw;
-  background: radial-gradient(circle, rgba(127, 0, 255, 0.2) 0%, transparent 70%);
-  filter: blur(100px);
+  background: radial-gradient(circle, rgba(243, 139, 163, 0.08) 0%, transparent 70%);
+  /* Pink hint */
+  filter: blur(80px);
   pointer-events: none;
   z-index: 0;
   border-radius: 50%;
   mix-blend-mode: screen;
+  /* Changed from multiply for dark mode */
 }
 
 .bg-spotlight-1 {
@@ -94,7 +242,7 @@ body {
   transform: translate(-50%, -50%);
   width: 70vw;
   height: 70vw;
-  background: radial-gradient(circle, rgba(127, 0, 255, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(127, 0, 255, 0.03) 0%, transparent 70%);
 }
 
 .bg-spotlight-4 {
@@ -103,7 +251,7 @@ body {
   transform: translateX(-50%);
   width: 60vw;
   height: 40vh;
-  background: radial-gradient(circle, rgba(255, 107, 74, 0.2) 0%, transparent 75%);
+  background: radial-gradient(circle, rgba(255, 107, 74, 0.05) 0%, transparent 75%);
 }
 
 /* Ensure content stays above spotlights */
@@ -114,8 +262,13 @@ body {
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-family: var(--font-header) !important;
+  /* Cubano style */
+  font-size: 3.5em;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1;
 }
 
 #app {
@@ -125,63 +278,207 @@ h1 {
   text-align: center;
 }
 
-.app-header {
-  position: fixed;
-  top: 1.5rem;
-  left: 0;
-  right: 0;
-  height: auto;
+
+
+.pill-nav-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   background: transparent;
-  backdrop-filter: none;
-  border-bottom: none;
-  border-bottom: none;
-  z-index: 10000;
-  /* Above mobile menu */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* Removed purple glow */
   pointer-events: none;
-  /* Let clicks pass through the sides */
-  overflow: hidden;
+  z-index: 0;
+  transition: opacity 0.3s ease;
 }
 
-.pill-nav-container {
-  pointer-events: auto;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 2rem;
-  padding: 0 2rem;
-  background:
-    /* Top Left */
-    linear-gradient(to right, var(--vibrant-orange) 12px, transparent 12px) 0 0 / 12px 1px no-repeat,
-    linear-gradient(to bottom, var(--vibrant-orange) 12px, transparent 12px) 0 0 / 1px 12px no-repeat,
-    /* Top Right */
-    linear-gradient(to left, var(--vibrant-orange) 12px, transparent 12px) 100% 0 / 12px 1px no-repeat,
-    linear-gradient(to bottom, var(--vibrant-orange) 12px, transparent 12px) 100% 0 / 1px 12px no-repeat,
-    /* Bottom Left */
-    linear-gradient(to right, var(--vibrant-orange) 12px, transparent 12px) 0 100% / 12px 1px no-repeat,
-    linear-gradient(to top, var(--vibrant-orange) 12px, transparent 12px) 0 100% / 1px 12px no-repeat,
-    /* Bottom Right */
-    linear-gradient(to left, var(--vibrant-orange) 12px, transparent 12px) 100% 100% / 12px 1px no-repeat,
-    linear-gradient(to top, var(--vibrant-orange) 12px, transparent 12px) 100% 100% / 1px 12px no-repeat,
-    var(--glass-bg);
-  background-origin: border-box;
-  backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  /* Squared like 100x */
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
-  height: 60px;
-  width: auto;
-  transition: all 0.3s ease;
+.pill-nav-container:hover::before {
+  opacity: 0.8;
+}
+
+.header-logo,
+.nav-menu,
+.nav-buttons,
+.menu-toggle {
   position: relative;
+  z-index: 1;
+}
+
+/* Hide hamburger menu on desktop by default */
+.menu-toggle {
+  display: none;
+}
+
+/* Menu Button - Hamburger Icon Style */
+.menu-btn {
+  display: none;
+  /* Hidden on desktop by default */
+  background: transparent;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20020;
+  padding: 0;
+}
+
+.menu-btn:hover {
+  color: var(--brand-pink);
+  transform: translateY(-1px);
+}
+
+.menu-btn.open {
+  color: var(--brand-pink);
+}
+
+/* Hamburger to Cross Animation */
+.menu-btn .line {
+  transform-origin: center;
+  transform-box: fill-box;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+}
+
+.menu-btn.open .line.top {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.menu-btn.open .line.middle {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.menu-btn.open .line.bottom {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+
+
+.pill-nav-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.02), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.pill-nav-container:hover::after {
+  transform: translateX(100%);
 }
 
 .pill-nav-container:hover {
-  background-size: 18px 1px, 1px 18px, 18px 1px, 1px 18px, 18px 1px, 1px 18px, 18px 1px, 1px 18px, auto;
-  border-color: rgba(255, 107, 74, 0.4);
-  box-shadow: 0 0 30px rgba(255, 107, 74, 0.2);
+  border-color: var(--primary-purple);
+  box-shadow: 0 8px 30px rgba(124, 58, 237, 0.08);
+  transform: translateY(-1px);
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-menu li {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.nav-menu li:not(:last-child)::after {
+  content: "";
+  height: 12px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--primary-purple), var(--vibrant-orange));
+  margin-left: 1rem;
+  opacity: 0.3;
+}
+
+.pill-nav-container .nav-menu li a {
+  color: #cccccc !important;
+  /* Muted white */
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  letter-spacing: -0.01em;
+}
+
+.nav-menu li a:hover {
+  color: var(--brand-pink) !important;
+  /* Pink on hover */
+}
+
+.nav-buttons.desktop-buttons {
+  display: flex !important;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.nav-btn {
+  padding: 0.45rem 1rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.youtube-btn {
+  display: flex !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 9999 !important;
+  padding: 0.45rem 1.2rem !important;
+  min-width: 100px;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.youtube-btn:hover {
+  background: var(--brand-yellow) !important;
+  color: #000;
+  /* Black text on yellow */
+  border-color: var(--brand-yellow) !important;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.newsletter-btn {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #ffffff !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 1.2rem !important;
+  /* Matches YouTube btn */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 800;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+.newsletter-btn:hover {
+  background: #f0f0f0 !important;
+  color: #000 !important;
+  border-color: #f0f0f0 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.4);
 }
 
 .header-container {
@@ -203,7 +500,7 @@ h1 {
 .footer-logo,
 .mobile-logo {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: flex-start;
   flex-shrink: 0;
   gap: 2px;
@@ -216,37 +513,89 @@ h1 {
   transform: translateX(6px);
 }
 
-.logo-text {
-  font-family: var(--font-main);
-  font-weight: 800;
-  font-size: 1.5rem;
-  color: #ffffff;
-  letter-spacing: -0.05em;
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.header-logo:hover {
+  transform: translateY(-1px);
+}
+
+.logo-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.logo-name-stacked {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.1;
+}
+
+.name-top {
+  font-family: var(--font-header);
+  font-size: 1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #fff;
+}
+
+.logo-cursor {
+  color: #FF248F;
+  /* Solid brand pink */
+  margin-left: 2px;
+}
+
+.name-bottom {
+  font-family: var(--font-outfit);
+  font-size: 0.85rem;
+  font-weight: 500;
   text-transform: lowercase;
+  opacity: 0.7;
+  color: #fff;
+  letter-spacing: 0.02em;
 }
 
-.logo-underscore-wrapper {
-  position: relative;
-  display: inline-flex;
-  align-items: baseline;
+/* Logo Brand Details - Sandcastles Style */
+.logo-brand-details {
+  display: flex;
+  align-items: center;
 }
 
-.logo-underscore {
-  font-family: var(--font-main);
+.brand-name {
+  font-family: var(--font-header);
+  font-size: 0.8rem;
   font-weight: 800;
-  font-size: 2.2rem;
-  color: var(--vibrant-orange);
-  line-height: 0.8;
-  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  white-space: nowrap;
 }
 
-.header-logo:hover .logo-underscore {
-  opacity: 1;
-  /* Keep visible */
-  color: transparent;
-  /* Trick: make transparent if we want E to take its place? Or user said "DONT WANT THAT" meaning keep it visible? Let's keep it visible. */
-  color: var(--vibrant-orange);
+.pc-name-ext {
+  display: inline;
 }
+
+@media (max-width: 480px) {
+  .pc-name-ext {
+    display: none;
+  }
+
+  .brand-name {
+    font-size: 0.85rem;
+  }
+}
+
 
 .logo-hover-e {
   position: absolute;
@@ -256,7 +605,7 @@ h1 {
   font-family: var(--font-main);
   font-weight: 800;
   font-size: 1.5rem;
-  color: var(--vibrant-orange);
+  color: var(--brand-yellow);
   line-height: 1;
   opacity: 0;
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -290,10 +639,12 @@ h1 {
   transform: scale(1.05);
 }
 
+/* Hero Section */
 .hero {
-  padding: 8rem 2rem 2rem;
-  /* Reduced padding */
+  padding: 15px 2rem 2rem;
+  /* Tighter gap between Navbar and Headline */
   margin: 0;
+  min-height: auto;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -304,136 +655,393 @@ h1 {
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
-  /* Ensure images don't bleed out */
 }
 
-/* Side Images with Fading */
-.hero-side-image {
+/* Hero Background Marquee - MrBeastJobs Inspired */
+/* Hero Background Custom Row Layout */
+.hero-bg-grid {
+  opacity: 0;
+  /* Hidden for GSAP */
   position: absolute;
-  top: -38%;
-  /* Moved even higher up */
-  height: 110%;
-  width: 35%;
-  /* Slightly wider again to frame better */
-  z-index: 5;
-  pointer-events: none;
-  overflow: visible;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 165vw;
+  /* Wider to avoid any overlap */
+  height: 200%;
+  z-index: 0;
+  pointer-events: auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 25px;
+  gap: 30px;
+  /* Increased for breathing room */
+  mask-image: linear-gradient(to top, transparent 0%, transparent 35%, black 75%, black 100%);
+  -webkit-mask-image: linear-gradient(to top, transparent 0%, transparent 35%, black 75%, black 100%);
 }
 
-.hero-side-image img {
+.hero-bg-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  /* Align all images at the top - fixes '1st image higher' issue */
+  flex-wrap: nowrap;
+  /* Enforce single row */
+  gap: 30px;
+  /* Increased for breathing room */
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: contrast(150%) brightness(1.1);
-  /* Increased contrast as requested */
-  opacity: 0.17;
-  /* Faded 23% more for subtlety */
 }
 
-.hero-side-image::after {
+/* Specific visibility for 4 images: [30%] [60%] [Full] [Full] [60%] [30%] logic */
+/* If we have 4 images and want them big: */
+/* This rule is removed as it's replaced by the new .collage-item width */
+
+/* Rows removed for static grid */
+
+/* Base hidden state for GSAP */
+.collage-item {
+  opacity: 0;
+  visibility: hidden;
+  position: relative;
+  width: 33vw;
+  aspect-ratio: 16 / 9;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  transition: filter 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.collage-item::after {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(ellipse 40% 30% at 50% 45%,
-      rgba(255, 255, 255, 0.15) 0%,
-      rgba(255, 255, 255, 0.05) 30%,
-      transparent 60%);
+  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.95) 100%);
   pointer-events: none;
-  z-index: 2;
+  z-index: 1;
 }
 
-/* Side Labels Removed */
-
-.hero-side-image.left {
-  left: -5%;
-  transform: translateX(3px);
-  /* More to the left */
-  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 95%),
-    linear-gradient(to right, black 60%, transparent 95%);
-  mask-image: linear-gradient(to bottom, black 60%, transparent 95%),
-    linear-gradient(to right, black 60%, transparent 95%);
-  mask-composite: intersect;
-  -webkit-mask-composite: source-in;
-}
-
-/* Old overrides removed */
-
-.hero-side-image.right {
-  right: -5%;
-  transform: translateX(-6px);
-  /* More to the right */
-  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 95%),
-    linear-gradient(to left, black 60%, transparent 95%);
-  mask-image: linear-gradient(to bottom, black 60%, transparent 95%),
-    linear-gradient(to left, black 60%, transparent 95%);
-  mask-composite: intersect;
-  -webkit-mask-composite: source-in;
-}
-
-/* Floating text on hand images */
-.hand-floating-text {
+.hero-overlay {
+  opacity: 0;
+  visibility: hidden;
   position: absolute;
-  top: 55%;
-  font-family: var(--font-main);
-  font-size: clamp(0.5rem, 0.8vw, 0.7rem);
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.2rem;
-  opacity: 0.7;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.2) 30%,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0.9) 75%,
+      #000 90%);
+  z-index: 5;
   pointer-events: none;
-  transform: translateZ(10px);
-  z-index: 20;
-  filter: brightness(1.3);
 }
 
-.hand-floating-text.purple {
-  right: 15%;
-  left: auto;
-  color: #B266FF;
-  text-shadow:
-    0 0 10px #7F00FF,
-    0 0 20px rgba(127, 0, 255, 0.5);
+/* Final Opacity Goals (Applied via GSAP or as target) */
+.hero-bg-row:nth-child(2) .collage-item.is-visible {
+  opacity: 1;
+  filter: brightness(0.9);
 }
 
-.hand-floating-text.orange {
-  left: 15%;
-  right: auto;
-  color: #FF9E80;
-  text-shadow:
-    0 0 10px #FF6B4A,
-    0 0 20px rgba(255, 107, 74, 0.5);
+.hero-bg-row:nth-child(3) .collage-item.is-visible {
+  opacity: 0.8;
+  filter: brightness(0.75);
+}
+
+.hero-bg-row:nth-child(4) .collage-item.is-visible {
+  opacity: 0.08;
+  filter: brightness(0.4) blur(6px);
+}
+
+.collage-item:hover {
+  filter: brightness(1.2) contrast(1.1) !important;
+  /* Subtle boost as requested */
+  z-index: 10;
+}
+
+.collage-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Poster styles removed to enforce 16:9 only */
+
+/* Default visibility handled by media queries below */
+.hero-headline {
+  font-family: var(--font-header) !important;
+  font-size: clamp(2.2rem, 5.5vw, 4rem) !important;
+  /* Smaller headline as requested */
+  font-weight: 950 !important;
+  line-height: 1.1 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase;
+  color: #fff;
+  z-index: 10;
+  position: relative;
+  text-align: center;
+  text-shadow: 0 10px 80px rgba(0, 0, 0, 1), 0 0 30px rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Premium Personal Badge Identity - Better Integration */
+.hero-personal-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  margin-bottom: 1.5rem;
+  /* Tighter */
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-personal-badge::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent);
+  transform: skewX(-25deg);
+  animation: shimmer 4s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+
+  20% {
+    left: 150%;
+  }
+
+  100% {
+    left: 150%;
+  }
+}
+
+.hero-badge-avatar {
+  width: 40px;
+  /* Refined */
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--brand-pink);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.hero-badge-info {
+  text-align: left;
+  line-height: 1.1;
+}
+
+.hero-badge-name {
+  font-family: var(--font-header);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--brand-pink);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+  -webkit-text-stroke: 0.1px white;
+  display: block;
+}
+
+.hero-badge-title {
+  font-family: var(--font-outfit);
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+  display: block;
+}
+
+.tagline-highlight {
+  background: rgba(255, 36, 143, 0.6);
+  /* Slightly more saturated for better contrast with white text */
+  color: #ffffff !important;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 800;
+  border: 1px solid rgba(255, 36, 143, 0.3);
+}
+
+@media (max-width: 768px) {
+  .hero-personal-badge {
+    padding: 0.4rem 0.85rem;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-badge-avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .hero-badge-name {
+    font-size: 0.75rem;
+  }
+
+  .hero-badge-title {
+    font-size: 0.6rem;
+  }
+}
+
+/* Hero local logo block removed */
+
+/* PC Specific Styles (Header already hidden here) */
+@media (min-width: 1024px) {
+  .hero-headline {
+    margin-top: 0.3rem !important;
+    margin-bottom: 1rem !important;
+    font-size: clamp(2.5rem, 6vw, 4.5rem) !important;
+  }
+
+  .hero-content {
+    margin-top: 0;
+  }
+
+  .hero {
+    padding-top: 4.2rem !important;
+    /* Reduced by another 5px approx */
+  }
+
+  .hero-description,
+  .trusted-pill-container {
+    display: none !important;
+  }
+
+  .hero-badge-name {
+    color: #fff !important;
+    -webkit-text-stroke: 0 !important;
+    text-shadow: none !important;
+  }
+}
+
+/* Mobile/Tablet Specific Styles */
+@media (max-width: 1023px) {
+  .hero-bg-grid {
+    display: none !important;
+    /* Hide photos on mobile */
+  }
+
+  /* Mobile Header Customization: Only "parbat" text */
+  .logo-avatar,
+  .name-bottom {
+    display: none !important;
+  }
+
+  .header-logo {
+    gap: 0 !important;
+  }
+
+  .name-top {
+    font-size: 1.2rem !important;
+  }
+
+  .hero {
+    padding-top: 5.2rem !important;
+    /* Reduced by another 5px approx */
+  }
+
+  .hero-headline {
+    margin-top: 0 !important;
+    margin-bottom: 0.5rem !important;
+    font-size: clamp(2rem, 9vw, 3rem) !important;
+  }
+
+  .hero-description,
+  .trusted-pill-container {
+    display: block !important;
+  }
+
+  .hero-description {
+    font-family: var(--font-outfit) !important;
+    font-weight: 400 !important;
+    font-size: 1rem !important;
+    /* Smaller on mobile */
+    line-height: 1.4 !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    margin-bottom: 1rem !important;
+    max-width: 90% !important;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+    /* Hidden for GSAP */
+  }
+
+  .hero-personal-badge {
+    display: none !important;
+    /* Hide logo/pic as requested for mobile */
+  }
+
+  .hero-buttons {
+    margin-top: 0.25rem !important;
+  }
+
+  .hero-bottom-separator {
+    margin-top: 0.5rem !important;
+    /* Bring ticker closer */
+  }
+}
+
+/* Cleaned up redundant block */
+
+.hero::before {
+  content: "";
+  display: none;
 }
 
 .hero::after {
   content: "";
   position: absolute;
-  bottom: 0;
+  bottom: -120px;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
-  height: 250px;
-  /* Increased height */
-  background: radial-gradient(ellipse at bottom center,
-      rgba(127, 0, 255, 0.3) 0%,
-      /* Increased opacity */
+  width: 120%;
+  height: 550px;
+  background: radial-gradient(ellipse at center,
+      rgba(127, 0, 255, 0.18) 0%,
       transparent 70%);
-  filter: blur(50px);
+  filter: blur(90px);
   pointer-events: none;
-  z-index: -1;
+  z-index: 0;
+  display: block;
 }
 
 @media (max-width: 768px) {
   .hero::after {
     height: 350px;
-    /* Even taller on mobile to be visible behind video/content */
-    background: radial-gradient(ellipse at bottom center,
-        rgba(127, 0, 255, 0.4) 0%,
-        /* Stronger on mobile */
+    bottom: -50px;
+    background: radial-gradient(ellipse at center,
+        rgba(127, 0, 255, 0.25) 0%,
         transparent 70%);
-    filter: blur(40px);
+    filter: blur(60px);
   }
 }
 
@@ -448,25 +1056,27 @@ h1 {
 }
 
 .trusted-pill-container {
-  margin-top: -2rem;
-  /* Pull up towards nav */
+  margin-top: 1rem;
   margin-bottom: 1.375rem;
   z-index: 1;
   position: relative;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .trusted-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.4rem 1rem;
-  background: rgba(127, 0, 255, 0.1);
-  border: 1px solid var(--primary-purple);
+  gap: 0.5rem;
+  padding: 0.3rem 0.75rem;
+  background: rgba(127, 0, 255, 0.05);
+  /* Lighter on white */
+  border: 1px solid rgba(127, 0, 255, 0.2);
   border-radius: 4px;
   backdrop-filter: blur(10px);
-  font-family: var(--font-mono);
+  font-family: var(--font-main);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   opacity: 0;
   /* Hidden initially for GSAP */
 }
@@ -480,7 +1090,7 @@ h1 {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 1px solid var(--primary-purple);
+  border: 1px solid rgba(127, 0, 255, 0.4);
   margin-left: -6px;
 }
 
@@ -490,8 +1100,9 @@ h1 {
 
 .trusted-text {
   font-size: 0.75rem;
-  color: #ffffff;
-  font-weight: 700;
+  color: var(--text-white);
+  /* Light text for dark theme */
+  font-weight: 750;
 }
 
 /* Mobile adjustments for trusted pill */
@@ -503,8 +1114,10 @@ h1 {
   }
 
   .trusted-pill-container {
-    margin-top: 0.5rem;
-    margin-bottom: 1.375rem;
+    margin-top: -12px !important;
+    /* Heavier pull up */
+    margin-bottom: 0.1rem !important;
+    /* Absolute minimum space */
   }
 
   .trusted-pill {
@@ -531,7 +1144,7 @@ h1 {
   }
 
   .hero-ticker-wrapper {
-    margin: 1rem 0 -0.5rem 0 !important;
+    margin: -0.5rem 0 -0.5rem 0 !important;
   }
 
   .hero-video-centered {
@@ -553,36 +1166,27 @@ h1 {
   /* Tighter */
 }
 
-.hero-headline {
-  font-size: clamp(2.5rem, 8vw, 4.2rem);
-  font-weight: 800;
-  font-weight: 800;
-  line-height: 0.95;
-  margin-top: 0;
-  margin-bottom: 1rem;
-  color: #ffffff;
-  letter-spacing: -0.05em;
-  font-family: var(--font-main);
-  opacity: 0;
-  /* Hidden initially for GSAP */
-}
+/* Old Hero Text Styles Removed */
 
-.hero-headline .highlight {
-  color: var(--vibrant-orange);
-  background: none;
-  -webkit-text-fill-color: var(--vibrant-orange);
-  text-shadow: 0 0 30px var(--orange-glow);
-}
-
-.hero-description {
+.brand-name {
+  font-family: 'Roc Grotesk Medium', 'Outfit', sans-serif;
+  font-weight: 500;
+  /* Medium weight */
   font-size: 1.25rem;
-  color: var(--text-muted);
-  max-width: 650px;
-  margin: 0 auto 2rem;
-  line-height: 1.5;
-  font-family: var(--font-main);
-  opacity: 0;
-  /* Hidden initially for GSAP */
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-top: -2px;
+  /* Micro-adjustment to remove space above */
+}
+
+.pc-name-ext {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .pc-name-ext {
+    display: inline;
+  }
 }
 
 .hero-buttons {
@@ -597,7 +1201,8 @@ h1 {
 }
 
 .hero-ticker-wrapper {
-  margin: 1.5rem 0 -0.5rem 0 !important;
+  margin: 1rem 0 0 0 !important;
+  /* Reduced top margin and bottom breathing room */
   width: 100%;
 }
 
@@ -610,20 +1215,16 @@ h1 {
   margin-bottom: 0.5rem;
 }
 
+.hero-bottom-separator {
+  opacity: 0;
+  visibility: hidden;
+}
+
 /* .hero-buttons::after removed */
 
 .hero-video-centered::before {
   content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 150%;
-  height: 150%;
-  background: radial-gradient(circle at center, rgba(76, 29, 149, 0.35) 0%, transparent 70%);
-  filter: blur(50px);
-  pointer-events: none;
-  z-index: -1;
+  display: none;
 }
 
 .hero-btn {
@@ -637,30 +1238,125 @@ h1 {
 }
 
 .primary-btn {
-  background: #9D4EDD;
-  /* Purple as default */
+  background: var(--brand-pink);
   color: #ffffff;
   border: none;
-  padding: 1.25rem 2.5rem;
-  font-size: 1.1rem;
-  font-weight: 700;
+  padding: 0.8rem 2.5rem;
+  /* Smaller padding */
+  font-size: 0.95rem;
+  /* Smaller font size */
+  font-weight: 850;
+  /* Extra bold */
   border-radius: 9999px;
-  /* Rounded pill style */
+  /* Capsule Shape (MrBeast) */
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
   font-family: var(--font-mono);
-  box-shadow: 0 10px 30px rgba(127, 0, 255, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .primary-btn:hover {
-  background: linear-gradient(90deg, var(--vibrant-orange), #FF4D2A);
-  /* Orange on hover */
-  transform: translateY(-4px);
-  box-shadow: 0 20px 50px var(--orange-glow);
+  background: var(--brand-pink);
+  color: #ffffff;
+  transform: translateY(-4px) scale(1.02);
+  /* Optional: Enhance shadow/glow instead of changing color */
+  box-shadow: 0 20px 50px rgba(255, 36, 143, 0.4);
 }
 
-.primary-btn::after {
-  display: none;
+.pulse-glow {
+  animation: none;
+}
+
+@keyframes pulse-glow-anim {
+
+  0%,
+  100% {
+    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.5);
+  }
+}
+
+.highlight {
+  color: var(--brand-pink) !important;
+}
+
+.premium-shimmer {
+  position: relative;
+  display: inline-block;
+  color: var(--brand-pink) !important;
+  font-family: var(--font-averia) !important;
+  /* Averia Gruesa Libre */
+  font-weight: 400 !important;
+  /* Averia Gruesa Libre is naturally heavy */
+  background: none;
+  -webkit-text-fill-color: var(--brand-pink);
+  animation: none;
+  text-shadow: none !important;
+  /* No glow as requested */
+}
+
+@keyframes shine {
+  0% {
+    background-position: 0% center;
+  }
+
+  50% {
+    background-position: 100% center;
+  }
+
+  100% {
+    background-position: 0% center;
+  }
+}
+
+.video-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--vibrant-orange);
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.video-corner.top-left {
+  top: -10px;
+  left: -10px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.video-corner.top-right {
+  top: -10px;
+  right: -10px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.video-corner.bottom-left {
+  bottom: -10px;
+  left: -10px;
+  border-right: none;
+  border-top: none;
+}
+
+.video-corner.bottom-right {
+  bottom: -10px;
+  right: -10px;
+  border-left: none;
+  border-top: none;
+}
+
+.hover-lift {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-lift:hover {
+  transform: scale(1.05) translateY(-5px);
 }
 
 .secondary-btn {
@@ -722,7 +1418,7 @@ h1 {
 
 @media (max-width: 768px) {
   .hero {
-    padding: 6rem 1.5rem 2rem;
+    padding: 6rem 1.5rem 0.5rem;
     min-height: auto;
   }
 
@@ -1298,6 +1994,27 @@ h1 {
   }
 }
 
+/* Hide app-header on PC (Desktop) - Show only on Mobile/Tablet */
+@media (min-width: 1024px) {
+  .app-header {
+    display: none !important;
+  }
+}
+
+/* Ensure hamburger menu is visible on mobile/tablet */
+@media (max-width: 1023px) {
+  .menu-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .desktop-nav,
+  .desktop-buttons {
+    display: none !important;
+  }
+}
+
 @media (max-width: 768px) {
   .footer-content {
     grid-template-columns: 1fr;
@@ -1309,16 +2026,15 @@ h1 {
   }
 
   .pill-nav-container {
-    padding: 0.4rem 0.75rem;
+    padding: 0 1rem;
     min-width: auto;
     width: calc(100% - 2rem);
     max-width: 100%;
-    gap: 0.5rem;
     height: 44px;
   }
 
   .header-logo {
-    margin-right: 0.5rem;
+    margin: 0;
   }
 
   .logo-image {
@@ -1336,18 +2052,18 @@ h1 {
 
   .menu-toggle {
     display: flex;
-    background: rgba(255, 107, 74, 0.1);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    color: var(--vibrant-orange);
-    border: 1px solid rgba(255, 107, 74, 0.5);
+    background: transparent !important;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    color: #fff;
+    border: none;
     padding: 0.35rem 0.75rem;
     border-radius: 9999px;
-    font-size: 0.75rem;
-    font-weight: 600;
     cursor: pointer;
     margin-left: auto;
     transition: all 0.3s ease;
+    align-items: center;
+    justify-content: center;
   }
 
   .menu-toggle .line {
@@ -1370,18 +2086,52 @@ h1 {
   }
 
   .menu-toggle:hover {
-    background: var(--vibrant-orange);
-    color: #ffffff;
-    border-color: var(--vibrant-orange);
-    box-shadow: 0 0 20px var(--orange-glow);
+    background: transparent !important;
+    color: #fff;
+    border-color: transparent;
+    box-shadow: none;
+    transform: none;
   }
 
   .header-logo {
-    padding-left: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .logo-name-stacked {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .name-top {
+    font-size: 0.95rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #fff;
+  }
+
+  .name-bottom {
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: lowercase;
+    opacity: 0.6;
+    color: #fff;
   }
 
   .logo-image {
-    height: 28px;
+    height: 24px;
   }
 
   .desktop-nav,
@@ -1391,80 +2141,67 @@ h1 {
 }
 
 @media (max-width: 480px) {
-  .pill-nav-container {
-    padding: 0.3rem 0.75rem;
-    height: 48px;
+  .logo-text {
+    font-size: 1.1rem;
   }
 
-  .header-logo {
-    padding-left: 10px;
-  }
-
-  .logo-image {
-    height: 26px;
+  .logo-underscore {
+    font-size: 1.4rem;
   }
 }
 
+/* Mobile Full Screen Menu Overlay */
 /* Mobile Full Screen Menu Overlay */
 /* Mobile Full Screen Menu Overlay */
 .mobile-menu-overlay {
   position: fixed;
-  top: 1.5rem;
-  /* Match header top */
-  left: 1rem;
-  right: 1rem;
-  bottom: 1.5rem;
-  border-radius: 16px;
-  /* Match rounded feel */
-  background: rgba(10, 10, 10, 0.98);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  z-index: 9999;
+  top: 1.25rem;
+  /* Matches lowered header exactly */
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--nav-width);
+  max-width: var(--nav-max-width);
+  /* Absolute centering to ensure it stays in frame */
+  /* Matches Pill Nav Width */
+  height: auto;
+  max-height: 85vh;
+  bottom: auto;
+  border-radius: 20px;
+  /* Match Mobile Pill Roundness exactly */
+  background: rgba(15, 13, 14, 0.98);
+  /* Dark opaque background */
+  backdrop-filter: none;
+  /* Lag fix */
+  -webkit-backdrop-filter: none;
+  z-index: 9000;
+  /* BELOW Header to let pill stay on top */
   display: flex;
   flex-direction: column;
-  padding: 1.5rem;
-  padding-top: 6rem;
-  /* Space for the header which is now on top */
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 4rem 1rem 1.5rem;
+  /* 4rem top padding clears the navbar */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  box-sizing: border-box;
 
-  /* Carpet Roll Effect with Wrinkle */
+  /* Carpet Roll Effect from Top */
   clip-path: inset(0 0 100% 0);
-  /* Hidden */
   visibility: hidden;
-  /* Closing transition: Fast Roll In */
-  transition: clip-path 0.4s cubic-bezier(0.6, 0.05, 0.01, 0.99), visibility 0s linear 0.4s;
+  /* Use animation for closing */
+  animation: menuRollClose 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: visibility 0s linear 0.5s;
 }
 
 .mobile-menu-overlay.active {
-  animation: unrollWrinkle 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: menuRollOpen 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   visibility: visible;
   transition: visibility 0s linear 0s;
 }
 
-@keyframes unrollWrinkle {
+@keyframes menuRollOpen {
   0% {
     clip-path: inset(0 0 100% 0);
-  }
-
-  40% {
-    clip-path: inset(0 0 20% 0);
-    /* Slight pause or unevenness could go here if using multiple steps, 
-       but a single smooth curve with specific bezier is usually better for "fabric" feel.
-       To simulate "wrinkle", we might wobble the bottom edge if we could (not easy with clip-path inset).
-       Alternative: Overshoot. */
-  }
-
-  70% {
-    /* Overshoot slightly? No, inset can't be negative easily on all browsers without issues. 
-     Instead, let's just use strict 0 but fast approach then dampen. */
-    clip-path: inset(0 0 0% 0);
-  }
-
-  80% {
-    /* Simulate a "settle" or ripple? 
-        Actually, let's keep it simple: A very "heavy" rollout feel.
-     */
-    clip-path: inset(0 0 0% 0);
   }
 
   100% {
@@ -1472,41 +2209,52 @@ h1 {
   }
 }
 
-.mobile-menu-header {
-  display: none;
-  /* Hide duplicate header, use main one */
+@keyframes menuRollClose {
+  0% {
+    clip-path: inset(0 0 0% 0);
+  }
+
+  100% {
+    clip-path: inset(0 0 100% 0);
+  }
 }
 
-.mobile-logo .logo-image {
-  height: 30px;
+.mobile-menu-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  min-height: 48px;
+  /* Match nav height for alignment */
 }
 
-.mobile-close-btn {
-  background: rgba(255, 107, 74, 0.1);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  color: var(--vibrant-orange);
-  border: 1px solid rgba(255, 107, 74, 0.5);
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  font-size: 0.85rem;
-  font-weight: 600;
+.mobile-close-btn-standalone {
+  position: static;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  background: transparent !important;
+  border: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.mobile-close-btn:hover {
-  background: var(--vibrant-orange);
-  border-color: var(--vibrant-orange);
-  color: #ffffff;
-  box-shadow: 0 0 20px var(--orange-glow);
+.mobile-close-btn-standalone:hover {
+  background: transparent !important;
+  transform: rotate(90deg);
 }
 
 .mobile-nav {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 2rem 0;
+  padding: 0;
 }
 
 .mobile-nav-menu {
@@ -1518,15 +2266,14 @@ h1 {
 .mobile-nav-menu li {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   opacity: 0;
-  transform: translateY(-20px);
+  transform: translateY(-10px);
   transition: all 0.3s ease-in;
-  /* Fade out when closing */
 }
 
 .mobile-menu-overlay.active .mobile-nav-menu li {
   opacity: 1;
   transform: translateY(0);
-  transition: all 0.5s ease-out;
+  transition: all 0.4s ease-out;
 }
 
 .mobile-menu-overlay.active .mobile-nav-menu li:nth-child(1) {
@@ -1534,31 +2281,32 @@ h1 {
 }
 
 .mobile-menu-overlay.active .mobile-nav-menu li:nth-child(2) {
-  transition-delay: 0.2s;
+  transition-delay: 0.15s;
 }
 
 .mobile-menu-overlay.active .mobile-nav-menu li:nth-child(3) {
-  transition-delay: 0.3s;
+  transition-delay: 0.2s;
 }
 
 .mobile-menu-overlay.active .mobile-nav-menu li:nth-child(4) {
-  transition-delay: 0.4s;
+  transition-delay: 0.25s;
 }
 
 .mobile-nav-menu li a {
   display: block;
-  padding: 1.25rem 0;
-  color: rgba(255, 255, 255, 0.9);
+  padding: 1rem 0.5rem;
+  color: #ffffff;
+  /* White text */
   text-decoration: none;
   font-size: 1.1rem;
-  font-weight: 500;
+  font-weight: 700;
   transition: all 0.2s ease;
 }
 
 .mobile-nav-menu li a:hover {
-  color: #ffffff;
-  padding-left: 0.5rem;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  color: var(--brand-pink);
+  padding-left: 1rem;
+  background: linear-gradient(90deg, rgba(255, 36, 143, 0.1), transparent);
 }
 
 .mobile-buttons {
@@ -1566,60 +2314,53 @@ h1 {
   flex-direction: column;
   gap: 0.75rem;
   padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .mobile-btn {
   padding: 1rem;
   border-radius: 9999px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   text-align: center;
   transition: all 0.3s ease;
+  font-family: var(--font-header);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .youtube-mobile-btn {
   background: transparent;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .youtube-mobile-btn:hover {
   background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: #fff;
 }
 
 .newsletter-mobile-btn {
-  background: #8B5CF6;
-  color: white;
+  background: var(--brand-pink);
+  color: #ffffff;
   border: none;
+  box-shadow: 0 4px 15px rgba(255, 36, 143, 0.3);
 }
 
 .newsletter-mobile-btn:hover {
-  background: #a78bfa;
+  background: #ff5caf;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 36, 143, 0.5);
 }
 
 .login-btn {
-  background: transparent;
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.login-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.4);
+  display: none;
 }
 
 .cta-btn {
-  background: #3B82F6;
-  color: white;
-  border: none;
-}
-
-.cta-btn:hover {
-  background: #2563EB;
+  display: none;
 }
 
 /* Desktop: Hide mobile elements */
@@ -1630,6 +2371,24 @@ h1 {
 
   .mobile-menu-overlay {
     display: none;
+  }
+}
+
+/* Mobile: Hide desktop nav elements */
+@media (max-width: 768px) {
+  .hero {
+    padding-top: 6.5rem !important;
+    /* Further tightened for minimal gap */
+  }
+
+  /* Pull content up slightly to reduce gap */
+  .hero-content {
+    margin-top: -7px;
+  }
+
+  .pill-nav-container>.main-nav,
+  .pill-nav-container>.nav-buttons {
+    display: none !important;
   }
 }
 
@@ -1672,7 +2431,7 @@ h1 {
   width: 100%;
   max-width: 1100px;
   /* Wider than video (1000px) to clear the edges */
-  gap: 2rem;
+  gap: 4rem;
   z-index: 10;
   position: relative;
 }
@@ -1683,10 +2442,10 @@ h1 {
   padding-left: 0;
 }
 
-.video-text-row.bottom {
+.video-text-row.bottom.centered-row {
   margin-top: 15px;
-  /* Added positive spacing to clear the video frame */
-  padding-right: 0;
+  justify-content: center;
+  gap: 2rem;
 }
 
 .video-text-top {
@@ -1707,25 +2466,29 @@ h1 {
   letter-spacing: 0.05em;
   white-space: nowrap;
   text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+  flex-shrink: 0;
 }
 
 .faded-line {
   flex: 1;
   height: 2px;
-  background: linear-gradient(to right, rgba(255, 255, 255, 0.5), transparent);
   border-radius: 2px;
 }
 
-.top .faded-line {
-  background: linear-gradient(to right,
-      rgba(255, 255, 255, 0.4) 0%,
-      rgba(255, 255, 255, 0.1) 50%,
-      transparent 100%);
-  transform-origin: left center;
+.faded-line.left {
+  background: linear-gradient(to left, var(--primary-purple), transparent);
 }
 
-.bottom .faded-line {
-  background: linear-gradient(to left, rgba(255, 107, 74, 0.6), transparent);
+.faded-line.right {
+  background: linear-gradient(to right, var(--vibrant-orange), transparent);
+}
+
+.bottom .faded-line.left {
+  background: linear-gradient(to left, var(--primary-purple), transparent);
+}
+
+.bottom .faded-line.right {
+  background: linear-gradient(to right, var(--vibrant-orange), transparent);
 }
 
 .video-column {
@@ -1749,11 +2512,6 @@ h1 {
 }
 
 /* Play Button Overlay */
-.video-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
 
 .play-button-overlay {
   position: absolute;
@@ -2212,8 +2970,8 @@ section {
   position: relative;
   padding-bottom: 2rem;
   /* Reduced from 4rem */
-  margin-bottom: 2rem;
-  /* Reduced from 4rem */
+  margin-bottom: 4rem;
+  /* Restored for better spacing */
 }
 
 section::before,
@@ -2232,9 +2990,8 @@ section::before {
   height: 2px;
   background: linear-gradient(90deg,
       transparent 0%,
-      rgba(127, 0, 255, 0.1) 15%,
-      rgba(127, 0, 255, 0.6) 50%,
-      rgba(127, 0, 255, 0.1) 85%,
+      var(--primary-purple) 30%,
+      var(--vibrant-orange) 70%,
       transparent 100%);
   box-shadow:
     0 0 20px rgba(127, 0, 255, 0.4),
@@ -2271,8 +3028,51 @@ footer::after {
   display: none !important;
 }
 
+/* Hide regular section separators for hero, video section and ticker (using ticker as the separator) */
+.hero::before,
+.hero::after,
+.modern-overview-section::before,
+.modern-overview-section::after,
+.ticker-container::before,
+.ticker-container::after {
+  display: none !important;
+}
+
 /* Hide separator after pricing section */
 .pricing-section::before,
 .pricing-section::after {
   display: none !important;
+}
+
+/* === FINAL FIXES FOR MOBILE MENU VS HEADER LAYERING === */
+
+/* Layers handled by z-index in critical header section */
+
+/* Force Overlay BEHIND Header */
+.mobile-menu-overlay {
+  z-index: 20000 !important;
+  /* Just below header */
+  padding-top: 6rem !important;
+  /* Increased slightly to clear lowered pill */
+}
+
+/* enhance burger visibility */
+.menu-toggle .line {
+  stroke: #ffffff;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+/* Ensure Cross Button Animation is Perfect */
+.menu-toggle.open .line.top {
+  transform: translateY(6px) rotate(45deg) !important;
+}
+
+.menu-toggle.open .line.middle {
+  opacity: 0 !important;
+  transform: scaleX(0) !important;
+}
+
+.menu-toggle.open .line.bottom {
+  transform: translateY(-6px) rotate(-45deg) !important;
 }

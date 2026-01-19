@@ -8,70 +8,80 @@ import { trackCTAClick, trackVideoPlay } from '../lib/analytics';
 import ProblemSolutionTicker from './ProblemSolutionTicker';
 
 const HeroSection: React.FC = () => {
-    const [isPlaying, setIsPlaying] = React.useState(false);
-    const iframeRef = React.useRef<HTMLIFrameElement>(null);
     const heroRef = useRef<HTMLElement>(null);
-
-
-    const handlePlay = () => {
-        setIsPlaying(true);
-        trackVideoPlay('Hero Section - How I Work Video', 0);
-        if (iframeRef.current && iframeRef.current.contentWindow) {
-            iframeRef.current.contentWindow.postMessage(JSON.stringify({ method: 'play' }), '*');
-        }
-    };
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
             gsap.registerPlugin(ScrollTrigger);
 
-            // Ensure elements are visible for animation (handles opacity: 0 in CSS)
-            // We only set the TOP elements to autoAlpha: 1 immediately if we want them to be managed by the first timeline.
-            // But since fromTo handles opacity start, we can actually just rely on that.
-            // However, to be safe against FOUC, we keep the set for all, assuming the ScrollTrigger will immediately apply the 'from' state for the video.
-            gsap.set([".trusted-pill", ".hero-headline", ".hero-description", ".hero-buttons", ".hero-video-centered", ".video-text-row"], { autoAlpha: 1 });
+            // Timeline 1: Intro Content
+            const tl = gsap.timeline({ delay: 0 });
 
-            // Timeline 1: Intro Content (Runs immediately)
-            const tl = gsap.timeline();
+            // Hide all elements initially
+            const elementsToHide = [
+                ".hero-bg-grid",
+                ".hero-overlay",
+                ".hero-headline",
+                ".hero-description",
+                ".hero-buttons",
+                ".hero-bottom-separator",
+                ".collage-item",
+                ".trusted-pill-container",
+                ".hero-personal-badge"
+            ];
+            gsap.set(elementsToHide, { autoAlpha: 0 });
 
-            tl.fromTo(".trusted-pill",
-                { y: -30, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
-            )
+            // Professional Montage Sequence:
+            // 1. Photos Grid (Base)
+            // 2. Overlay (Darken)
+            // 3. Staggered Row Reveal (Logic-driven Opacity)
+            // 4. Content Block Riser
+
+            tl.to(".hero-bg-grid", { autoAlpha: 1, duration: 0.8, ease: "power2.inOut" })
+                .to(".hero-overlay", { autoAlpha: 1, duration: 0.6, ease: "power2.out" }, "-=0.6")
+
+                // Row 1 Reveal
+                .to(".hero-bg-row:nth-child(2) .collage-item", {
+                    autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.05, ease: "power2.out"
+                }, "-=0.6")
+
+                // Row 2 Reveal (shorter stagger start)
+                .to(".hero-bg-row:nth-child(3) .collage-item", {
+                    autoAlpha: 0.8, y: 0, duration: 0.8, stagger: 0.05, ease: "power2.out"
+                }, "-=0.7")
+
+                // Row 3 Reveal
+                .to(".hero-bg-row:nth-child(4) .collage-item", {
+                    autoAlpha: 0.08, y: 0, duration: 0.8, stagger: 0.05, ease: "power2.out"
+                }, "-=0.7")
+
+                // Main Content Block Rise
+                .fromTo(".hero-personal-badge",
+                    { y: 30, autoAlpha: 0 },
+                    { y: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out" },
+                    "-=0.6"
+                )
                 .fromTo(".hero-headline",
-                    { y: 50, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.6"
+                    { y: 50, autoAlpha: 0 },
+                    { y: 0, autoAlpha: 1, duration: 0.7, ease: "power3.out" },
+                    "-=0.5"
                 )
                 .fromTo(".hero-description",
-                    { y: 30, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, "-=0.8"
+                    { y: 30, autoAlpha: 0 },
+                    { y: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out" },
+                    "-=0.5"
                 )
                 .fromTo(".hero-buttons",
-                    { y: 20, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, "-=0.6"
-                );
-
-            // Timeline 2: Video Section (Runs on Scroll)
-            const videoTl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: ".hero-video-centered",
-                    start: "top 85%", // Starts when the top of the video hits 85% of the viewport height
-                    toggleActions: "play none none reverse"
-                }
-            });
-
-            videoTl.fromTo(".hero-video-centered",
-                { y: 50, opacity: 0 },
-                { y: 0, opacity: 1, duration: 1, ease: "power4.out" }
-            )
-                .fromTo(".video-text-row",
-                    { opacity: 0, x: (i) => i === 0 ? -20 : 20, filter: "blur(10px)" },
-                    { opacity: 1, x: 0, filter: "blur(0px)", duration: 1, stagger: 0.2, ease: "power3.out" }, "-=0.8"
+                    { y: 20, autoAlpha: 0 },
+                    { y: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out" },
+                    "-=0.5"
                 )
-                .fromTo(".video-text-row .faded-line",
-                    { scaleX: 0, filter: "blur(10px)" },
-                    { scaleX: 1, filter: "blur(0px)", duration: 1.5, ease: "expo.out" }, "-=0.9"
+                .fromTo(".hero-bottom-separator",
+                    { y: 30, autoAlpha: 0 },
+                    { y: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out" },
+                    "-=0.5"
                 );
+
 
         }, heroRef);
 
@@ -80,94 +90,91 @@ const HeroSection: React.FC = () => {
 
     return (
         <section className="hero" ref={heroRef}>
-            {/* Background Side Images */}
-            <div className="hero-side-image left">
-                <img src="/left.png" alt="" />
-                <span className="hand-floating-text purple">lead</span>
-            </div>
-            <div className="hero-side-image right">
-                <img src="/right.png" alt="" />
-                <span className="hand-floating-text orange">revenue</span>
-            </div>
+            {/* Background Custom Row Layout */}
+            <div className="hero-bg-grid">
+                <div className="hero-overlay"></div>
 
+                {/* Row 1: 4 cards */}
+                <div className="hero-bg-row">
+                    {[3, 2, 1, 4].map((i) => (
+                        <div key={`row1-${i}`} className="collage-item">
+                            <img src={`/header-img/${i}.png`} alt="" />
+                        </div>
+                    ))}
+                </div>
+
+                {/* Row 2: 4 cards */}
+                <div className="hero-bg-row">
+                    {[5, 6, 7, 8].map((i) => (
+                        <div key={`row2-${i}`} className="collage-item">
+                            <img src={`/header-img/${i}.png`} alt="" />
+                        </div>
+                    ))}
+                </div>
+
+                {/* Row 3: Faded and shifted */}
+                <div className="hero-bg-row faded-bottom">
+                    {[1, 2, 3, 4].map((i) => (
+                        <div key={`row3-${i}`} className="collage-item">
+                            <img src={`/header-img/${i}.png`} alt="" />
+                        </div>
+                    ))}
+                </div>
+            </div>
 
             <div className="hero-content">
-
-                {/* Trusted By Pill */}
-                <div className="trusted-pill-container">
-                    <div className="trusted-pill">
-                        <div className="avatar-group">
-                            <img src="/bibhas rijal.png" alt="Client 1" />
-                            <img src="/pranav joshi.png" alt="Client 2" />
-                            <img src="/ziya sherpa.png" alt="Client 3" />
-                        </div>
-                        <span className="trusted-text">Led by Parbat Raj Paudel • Helping businesses fix leaky funnels</span>
+                {/* Premium Personal Badge Identity */}
+                <div className="hero-personal-badge">
+                    <img src="/avatar_me.png" alt="Parbat Paudel" className="hero-badge-avatar" />
+                    <div className="hero-badge-info">
+                        <span className="hero-badge-name">Parbat Raj Paudel</span>
+                        <span className="hero-badge-title">
+                            <span className="tagline-highlight">Gen AI Executor</span>
+                        </span>
                     </div>
                 </div>
 
-                {/* Headline */}
+                {/* Trusted By Pill (Hidden on Desktop via CSS) */}
+                <div className="trusted-pill-container">
+                    <div className="trusted-pill">
+                        <div className="avatar-group">
+                            <img src="/bibhas_rijal.png" alt="Client 1" />
+                            <img src="/pranav_joshi.png" alt="Client 2" />
+                            <img src="/ziya_sherpa.png" alt="Client 3" />
+                        </div>
+                        <span className="trusted-text">Led by <span style={{ color: 'var(--brand-pink)', WebkitTextStroke: '0.1px white', textShadow: '0 0 5px rgba(255, 255, 255, 0.2)' }}>Parbat Raj Paudel</span> • Helping businesses fix leaky funnels</span>
+                    </div>
+                </div>
+
+                {/* Headline - 3 Line Structure like MrBeast Jobs */}
                 <h1 className="hero-headline">
-                    Stop Losing Leads to a <br />
-                    <span className="highlight">Broken Sales Funnel</span>
+                    idea is cheap<br />
+                    execution is<br />
+                    <span className="highlight premium-shimmer">important</span>
                 </h1>
 
-                {/* Description */}
+                {/* Description (Visible on Mobile with Bio) */}
                 <p className="hero-description">
-                    I help businesses build and optimize high-converting sales funnels. From first touchpoint to final payment, I ensure your system maximizes revenue.
+                    Hey it's me Parbat, I am a Gen AI learner and executor using Gen AI tools to ease out, automate and increase quality of daily business operations.
                 </p>
 
                 {/* CTA Button */}
                 <div className="hero-buttons">
                     <Link href="/contact">
                         <button
-                            className="hero-btn primary-btn"
+                            className="hero-btn primary-btn pulse-glow"
                             onClick={() => trackCTAClick('Hero - Get Funnel Audit', '/contact')}
                         >
-                            Get a Funnel Audit
+                            Book a Meeting
                         </button>
                     </Link>
                 </div>
+            </div>
 
-                <div className="hero-ticker-wrapper">
+            {/* Separator Ticker - Animates in last */}
+            <div className="hero-bottom-separator" style={{ width: '100%', marginTop: '0' }}>
+                <div style={{ margin: '1rem 0 6px 0' }}>
                     <ProblemSolutionTicker />
-                </div>
-
-                {/* Hero Video Section with Integrated Text */}
-                <div className="hero-video-centered big-video-mode">
-                    <div className="video-text-row top">
-                        <span className="video-text-top">Turn Your Traffic</span>
-                        <div className="faded-line"></div>
-                    </div>
-
-                    <div className="video-column">
-                        <div className="video-wrapper">
-                            <div style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
-                                <iframe
-                                    ref={iframeRef}
-                                    src="https://player.vimeo.com/video/1148034470?badge=0&autopause=0&player_id=0&app_id=58479"
-                                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', borderRadius: '12px', border: 'none' }}
-                                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                                    referrerPolicy="strict-origin-when-cross-origin"
-                                    title="How I fix sales funnels"
-                                ></iframe>
-                            </div>
-
-                            {/* Custom Interactive Play Button Overlay */}
-                            {!isPlaying && (
-                                <div className="play-button-overlay" onClick={handlePlay}>
-                                    <div className="play-btn-capsule">
-                                        <span className="play-text">View Overview</span>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                        <Script src="https://player.vimeo.com/api/player.js" strategy="lazyOnload" />
-                    </div>
-
-                    <div className="video-text-row bottom">
-                        <div className="faded-line"></div>
-                        <span className="video-text-bottom">into Predictable ROI</span>
-                    </div>
                 </div>
             </div>
         </section>

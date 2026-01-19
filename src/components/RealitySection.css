@@ -1,0 +1,535 @@
+/* =========================================
+   REALITY SECTION + FEATURED QUOTE
+   Inspired by 100xengineers but Engineer-Themed
+   ========================================= */
+
+.reality-section-wrapper {
+    position: relative;
+    margin-top: -120px;
+    /* Pull the BG up to where graffiti starts fading */
+    padding: 5rem 1rem 6rem;
+    /* Top padding increased to 'down the headline' */
+    background: #000000;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* 
+   DISTINGUISHABLE FEATURE:
+   Scanner Grid Background & Tech Brackets
+*/
+.bg-tech-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 36, 143, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 36, 143, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+    mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+}
+
+.reality-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================================
+   1. HORIZONTAL VISIONARIES SCROLL
+   Structure: Marquee / Scrollable Flex
+   ========================================= */
+
+/* =========================================
+   1. HORIZONTAL VISIONARIES SCROLL
+   Structure: Marquee (Desktop) / Scroll (Mobile Interaction)
+   ========================================= */
+
+.visionaries-scroll-wrapper {
+    /* Hide scrollbar for clean look but allow scroll */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+    overflow-x: hidden;
+    /* Hide scrollbar by default, JS controls it or animation */
+    white-space: nowrap;
+    position: relative;
+    width: 100%;
+}
+
+.visionaries-scroll-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.visionaries-track {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    width: max-content;
+    will-change: transform;
+}
+
+/* ANIMATION CLASS FOR ENDLESS LOOP */
+.animate-marquee {
+    animation: marquee 80s linear infinite;
+}
+
+.animate-marquee:hover {
+    animation-play-state: paused;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* CARD DESIGN */
+.visionary-card {
+    width: 420px;
+    /* Reduced from 480px */
+    height: 240px;
+    /* Reduced from 280px */
+    background: #ffffff;
+    /* Clean Solid White */
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    /* Modern rounded look */
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    flex-shrink: 0;
+    white-space: normal;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+}
+
+.visionary-card:hover {
+    border-color: var(--brand-pink);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* LEFT COLUMN: Content */
+.visionary-card-left {
+    flex: 1.2;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+}
+
+/* Quote Icon Box */
+.quote-box-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--brand-pink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.quote-box-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: white;
+    stroke: none;
+}
+
+.reality-title {
+    font-size: clamp(3rem, 6vw, 6rem);
+    font-weight: 900;
+    line-height: 1;
+    color: #fff;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+/* Quote Text */
+.visionary-quote-text {
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.4;
+    color: #111111;
+    /* Deep Black for contrast */
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.v-highlight {
+    color: var(--brand-pink);
+}
+
+/* Author Info */
+.visionary-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.v-name {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--brand-pink);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.v-role {
+    font-size: 0.75rem;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+/* =========================================
+   2. THE REALITY SECTION (Grid)
+   ========================================= */
+
+.reality-header {
+    margin-bottom: 4rem;
+}
+
+.reality-label {
+    font-size: 0.75rem;
+    font-weight: 900;
+    color: #fff;
+    background: var(--brand-pink);
+    padding: 6px 16px;
+    border-radius: 100px;
+    display: inline-block;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    /* Reduced from 1.25rem */
+    box-shadow: 0 4px 15px rgba(255, 36, 143, 0.3);
+}
+
+/* This .reality-title is for the main section header */
+.reality-title {
+    font-size: clamp(3rem, 6vw, 6rem);
+    font-weight: 900;
+    line-height: 1;
+    color: #fff;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+.reality-title span {
+    color: var(--brand-pink);
+}
+
+.reality-desc {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+/* Grid Layout */
+.reality-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+/* DARK CARD DESIGN (Unvika Essence) */
+.reality-card {
+    background: rgba(255, 255, 255, 0.03);
+    /* Dark Transparent Card */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem 1.5rem 1.5rem 1.75rem;
+    /* Added 4px left padding (1.5rem to 1.75rem approx) */
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    /* Horizontal Layout */
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    height: auto;
+    min-height: 100px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: visible;
+    /* Allow brackets to sit on edge */
+}
+
+.reality-card:hover {
+    background: rgba(255, 36, 143, 0.08);
+    /* Brand Pink Tint */
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 36, 143, 0.3);
+}
+
+.rc-icon {
+    width: auto;
+    height: auto;
+    background: transparent;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-pink);
+    /* Brand Pink Icon */
+    margin-bottom: 0;
+    flex-shrink: 0;
+}
+
+.rc-icon svg {
+    width: 32px;
+    height: 32px;
+    stroke: var(--brand-pink);
+    /* Brand Pink Stroke */
+}
+
+/* Title on Right */
+.rc-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    /* White Text */
+    line-height: 1.2;
+    text-align: left;
+    padding-left: 4px;
+    /* Added 4px left padding as requested */
+}
+
+/* Removed Number */
+.rc-number {
+    display: none;
+}
+
+/* Corner Accents (Pink Brackets) */
+.reality-card::before,
+.reality-card::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border: 2px solid var(--brand-pink);
+    /* Brand Pink Brackets */
+    transition: all 0.3s ease;
+    opacity: 0.6;
+    /* Slight transparency */
+}
+
+.reality-card::before {
+    top: 6px;
+    left: 6px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.reality-card::after {
+    bottom: 6px;
+    right: 6px;
+    border-left: none;
+    border-top: none;
+}
+
+/* Hover Effect on Brackets */
+.reality-card:hover::before,
+.reality-card:hover::after {
+    width: 12px;
+    height: 12px;
+}
+
+/* RIGHT COLUMN: Image */
+.visionary-card-right {
+    flex: 0.8;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+}
+
+.visionary-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Use cover to ensure it fills the container and touches the edges */
+    object-position: center bottom;
+    background: transparent;
+    /* Removed black background */
+    filter: grayscale(100%);
+    transition: filter 0.4s ease, transform 0.4s ease;
+    transform: scale(1.0);
+    /* Made other images slightly smaller */
+    transform-origin: center top;
+}
+
+.visionary-card:hover .visionary-img {
+    filter: grayscale(0%);
+    transform: scale(1);
+}
+
+.v-img-overlay {
+    position: absolute;
+    inset: 0;
+    /* Combined Left-to-Right white fade and Bottom-to-Top black fade */
+    background:
+        linear-gradient(to right, #ffffff 0%, transparent 25%),
+        linear-gradient(to top, #000000 0%, transparent 40%);
+    pointer-events: none;
+}
+
+/* MOBILE BUTTONS */
+.visionaries-mobile-buttons {
+    display: none;
+    /* Hidden on desktop */
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.v-mobile-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.v-mobile-btn:active {
+    background: var(--brand-pink);
+    border-color: var(--brand-pink);
+    transform: scale(0.95);
+}
+
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .visionary-card {
+        width: 400px;
+    }
+
+    .reality-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Enable Scroll Snap or Buttons on Mobile */
+    .visionaries-scroll-wrapper {
+        overflow-x: auto;
+        /* Allow manual swipe on mobile */
+        scroll-behavior: smooth;
+        scroll-snap-type: x mandatory;
+    }
+
+    /* Disable infinite animation on mobile if buttons are used, 
+       BUT user asked for "auto scroll" AND buttons. 
+       Usually you can't have both smoothly. 
+       Let's keep animation but allow buttons to 'jump' position? 
+       Actually, standard practice: Auto-scroll until touch. 
+    */
+
+    /* Disable CSS animation on mobile - JS handles auto-scroll */
+    .animate-marquee {
+        animation: none !important;
+    }
+
+    /* We will use JS for mobile logic mostly, CSS just styles */
+
+    .visionary-card {
+        width: 300px;
+        /* Smaller card */
+        height: auto;
+        min-height: 240px;
+        flex-direction: column-reverse;
+        /* Image top */
+        scroll-snap-align: center;
+    }
+
+    .visionary-card-right {
+        height: 160px;
+        flex: none;
+    }
+
+    .visionary-card-left {
+        flex: 1;
+        padding: 1.5rem;
+    }
+
+    .visionary-img {
+        transform: scale(1.05);
+        transform-origin: center top;
+        object-position: center 10% !important;
+        /* Forces face to be visible on mobile */
+    }
+
+    .visionary-quote-text {
+        font-size: 1rem;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+    }
+
+    .visionaries-mobile-buttons {
+        display: flex;
+        /* Show on mobile */
+    }
+
+    /* 2 COLUMNS ON MOBILE (Matches Reference) */
+    .reality-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .reality-card {
+        flex-direction: column;
+        /* Stack Icon Top, Text Bottom for tight space */
+        align-items: flex-start;
+        text-align: left;
+        padding: 1rem;
+        min-height: 120px;
+    }
+
+    .rc-icon {
+        margin-bottom: 0.5rem;
+    }
+
+    .rc-icon svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .rc-title {
+        font-size: 0.95rem;
+        color: #fff;
+        /* White Text on Dark Card */
+    }
+
+    .reality-section-wrapper {
+        margin-top: -80px !important;
+        padding-top: 4rem !important;
+    }
+
+    .reality-title {
+        font-size: 2.5rem;
+        /* Slightly smaller on mobile but still big */
+    }
+
+    .reality-header {
+        margin-bottom: 2rem;
+    }
+}
