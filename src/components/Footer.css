@@ -1,6 +1,7 @@
 .footer {
-    background: #050505;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: #000000;
+    /* Dark theme */
+    border-top: 1px solid var(--border-color);
     padding: 3rem 2rem 2rem;
     font-family: var(--font-inter), sans-serif;
     position: relative;
@@ -35,13 +36,13 @@
 .logo-text {
     font-size: 1.5rem;
     font-weight: 800;
-    color: #fff;
+    color: var(--text-white);
     font-family: var(--font-main), sans-serif;
     letter-spacing: -0.05em;
 }
 
 .footer-tagline {
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-muted);
     line-height: 1.6;
     margin-bottom: 2rem;
     font-size: 0.95rem;
@@ -61,9 +62,9 @@
     justify-content: center;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 50%;
-    color: rgba(255, 255, 255, 0.6);
+    color: #ffffff;
     transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .social-icon svg {
@@ -111,32 +112,32 @@
 }
 
 .links-group h4 {
-    color: #fff;
+    color: var(--text-white);
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 800;
     margin-bottom: 0.5rem;
 }
 
 .links-group a {
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-muted);
     text-decoration: none;
     font-size: 0.95rem;
     transition: color 0.2s ease;
 }
 
 .links-group a:hover {
-    color: #7F00FF;
+    color: var(--brand-yellow);
 }
 
 /* Bottom Bar */
 .footer-bottom {
     padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid var(--border-color);
     text-align: center;
 }
 
 .footer-bottom p {
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--text-muted);
     font-size: 0.9rem;
 }
 

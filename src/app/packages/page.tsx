@@ -1,7 +1,6 @@
 "use client";
 import React from 'react';
 import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 import './packages.css';
 
 const PackagesPage = () => {
@@ -98,7 +97,6 @@ const PackagesPage = () => {
                 </div>
             </section>
 
-            <Footer />
         </main>
     );
 };

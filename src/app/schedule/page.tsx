@@ -1,7 +1,6 @@
 "use client";
 import React from 'react';
 import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 import Script from 'next/script';
 
 const SchedulePage = () => {
@@ -54,7 +53,6 @@ const SchedulePage = () => {
                 </div>
             </section>
 
-            <Footer />
         </main>
     );
 };

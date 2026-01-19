@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
 import './ChatBot.css';
+import { trackChatEvent, trackOutboundLink } from '../lib/analytics';
 
 interface Message {
     role: 'user' | 'assistant';
@@ -33,8 +34,8 @@ const ChatBot: React.FC = () => {
             setMessages(JSON.parse(savedHistory));
         } else {
             const greeting = savedName
-                ? `Hi ${savedName}! I'm Parbat, your personalized assistant. Ready to scale today?`
-                : "Hi! I'm Parbat, your AI assistant. What's your name so I can personalize your experience?";
+                ? `Hi ${savedName}! I'm Parbat Raj Paudel, your Sales Funnel Specialist. Ready to scale today?`
+                : "Hi! I'm Parbat Raj Paudel, your AI Sales Funnel Specialist. What's your name so I can personalize your experience?";
             setMessages([{ role: 'assistant', content: greeting }]);
         }
 
@@ -56,6 +57,9 @@ const ChatBot: React.FC = () => {
     const toggleOpen = () => {
         if (!isOpen) {
             setViewMode('home');
+            trackChatEvent('open', 'Chat opened by user');
+        } else {
+            trackChatEvent('close', 'Chat closed by user');
         }
         setIsOpen(!isOpen);
     };
@@ -158,6 +162,9 @@ const ChatBot: React.FC = () => {
         if (e) e.preventDefault();
         if (!inputText.trim() || isTyping) return;
 
+        // Track user message
+        trackChatEvent('message_sent', inputText.substring(0, 50));
+
         const userMsg: Message = { role: 'user', content: inputText };
         const newMessages = [...messages, userMsg];
 
@@ -218,19 +225,15 @@ const ChatBot: React.FC = () => {
                     <div className="trigger-pulse-wrapper">
                         <div className="pulse-ring"></div>
                         <img
-                            src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Leo"
-                            alt="Parbat Assistant"
+                            src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Jude"
+                            alt="Parbat AI Assistant"
                             className="bot-avatar-img"
                         />
                     </div>
                 )}
                 {!isOpen && (
-                    <div className="welcome-bubble" onClick={(e) => { e.stopPropagation(); toggleOpen(); }}>
-                        <div className="welcome-bubble-content">
-                            <strong>Welcome! 👋</strong>
-                            <span>Try Parbat Assistant!</span>
-                        </div>
-                        <div className="welcome-bubble-arrow"></div>
+                    <div className="bot-name-label">
+                        Hope
                     </div>
                 )}
             </button>
@@ -241,48 +244,139 @@ const ChatBot: React.FC = () => {
                     <div className="header-info">
                         <div className="bot-avatar-container">
                             <img
-                                src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Leo"
-                                alt="Parbat Assistant"
+                                src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Jude"
+                                alt="Parbat AI Assistant"
                                 className="header-avatar-img"
                             />
                             <div className="online-indicator"></div>
                         </div>
                         <div>
-                            <h4>Parbat {userName ? `for ${userName}` : ''}</h4>
+                            <h4>Parbat AI {userName ? `for ${userName}` : ''}</h4>
                             <span>AI Assistant</span>
                         </div>
                     </div>
-                    {viewMode === 'chat' && (
-                        <button className="tts-toggle" onClick={() => setViewMode('home')} title="Back to Menu">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
+                    <div className="header-actions">
+                        {viewMode === 'chat' && (
+                            <button className="tts-toggle" onClick={() => setViewMode('home')} title="Back to Menu">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
+                            </button>
+                        )}
+                        <button className="close-btn-header" onClick={toggleOpen} title="Close Chat">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 6L6 18M6 6l12 12" /></svg>
                         </button>
-                    )}
+                    </div>
                 </div>
 
                 {viewMode === 'home' ? (
                     <div className="selection-container">
-                        <h3 className="selection-title">How can we help?</h3>
-                        <p className="selection-subtitle">Choose your preferred way to connect</p>
+                        <h3 className="selection-title" style={{ fontSize: '1.5rem', lineHeight: '1.3', maxWidth: '80%' }}>
+                            Your Growth Partner for Everyday
+                        </h3>
 
-                        <a
-                            href="https://wa.me/98888888"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="selection-button whatsapp"
+                        <div className="home-hero-visual" style={{ position: 'relative', margin: '10px 0 20px' }}>
+                            <img
+                                src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Jude"
+                                alt="Parbat AI"
+                                className="hero-avatar-img"
+                                style={{ width: '120px', height: '120px' }}
+                            />
+                            <div className="hero-bubble" style={{
+                                position: 'absolute',
+                                top: '-15px',
+                                right: '-35px',
+                                background: '#fff',
+                                padding: '6px 8px',
+                                borderRadius: '10px',
+                                borderBottomLeftRadius: '0px',
+                                boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+                                fontSize: '0.65rem',
+                                fontWeight: '500',
+                                color: '#333',
+                                maxWidth: '110px',
+                                textAlign: 'left',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '4px',
+                                zIndex: 10
+                            }}>
+                                <span style={{ fontWeight: 700, fontSize: '0.7rem' }}>Hi! 👋</span>
+                                <a
+                                    href="https://wa.me/9779761014195"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        trackOutboundLink('https://wa.me/9779761014195', 'WhatsApp Bubble Click');
+                                    }}
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        marginTop: '2px',
+                                        background: 'var(--brand-pink)',
+                                        color: 'white',
+                                        borderRadius: '4px',
+                                        padding: '4px',
+                                        textDecoration: 'none',
+                                        fontSize: '0.6rem',
+                                        gap: '4px',
+                                        fontWeight: 600,
+                                        width: '100%',
+                                        boxSizing: 'border-box'
+                                    }}
+                                >
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
+                                    WhatsApp
+                                </a>
+                            </div>
+                        </div>
+
+                        <div
+                            className="home-input-trigger"
+                            onClick={() => setViewMode('chat')}
+                            style={{
+                                width: '90%',
+                                background: '#ffffff',
+                                borderRadius: '999px',
+                                padding: '12px 18px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                cursor: 'pointer',
+                                border: '1px solid rgba(0,0,0,0.08)',
+                                transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
+                                marginBottom: '15px',
+                                flexShrink: 0,
+                                boxShadow: '0 4px 15px rgba(0,0,0,0.03)'
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.transform = 'translateY(-2px)';
+                                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.08)';
+                                e.currentTarget.style.borderColor = 'var(--brand-pink)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.transform = 'translateY(0)';
+                                e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.03)';
+                                e.currentTarget.style.borderColor = 'rgba(0,0,0,0.08)';
+                            }}
                         >
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                            </svg>
-                            Chat on WhatsApp
-                        </a>
+                            <span style={{ color: '#666', fontSize: '0.95rem', fontWeight: 500 }}>Ask me anything...</span>
+                            <div style={{
+                                width: '36px',
+                                height: '36px',
+                                background: 'linear-gradient(135deg, var(--brand-pink) 0%, #ec4899 100%)',
+                                borderRadius: '50%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: 'white',
+                                boxShadow: '0 2px 10px rgba(236, 72, 153, 0.3)'
+                            }}>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ width: '18px', height: '18px' }}><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                            </div>
+                        </div>
 
-                        <button className="selection-button unvika" onClick={() => setViewMode('chat')}>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-                                <path d="M12 3a9 9 0 1 1-6.18 15.54" />
-                            </svg>
-                            Chat with Parbat
-                        </button>
+                        {/* Secondary WhatsApp Link removed as it's now in the bubble */}
                     </div>
                 ) : (
                     <>
@@ -291,7 +385,7 @@ const ChatBot: React.FC = () => {
                                 <div key={i} className={`message-wrapper ${m.role}`}>
                                     {m.role === 'assistant' && (
                                         <div className="message-avatar">
-                                            <img src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Leo" alt="Leo" />
+                                            <img src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Jude" alt="Parbat" />
                                         </div>
                                     )}
                                     <div className="message-bubble">
@@ -302,7 +396,7 @@ const ChatBot: React.FC = () => {
                             {isTyping && (
                                 <div className="message-wrapper assistant">
                                     <div className="message-avatar">
-                                        <img src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Leo" alt="Leo" />
+                                        <img src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Jude" alt="Parbat" />
                                     </div>
                                     <div className="message-bubble typing">
                                         <span></span><span></span><span></span>

@@ -4,6 +4,7 @@ import './DailyVideosSection.css';
 import Script from 'next/script';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { trackVideoPlay, trackNewsletterSubscription } from '../lib/analytics';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,8 +17,9 @@ const DailyVideosSection = () => {
 
     const handlePlay = () => {
         setIsPlaying(true);
+        trackVideoPlay('Daily Value Video', 0);
         if (iframeRef.current && iframeRef.current.contentWindow) {
-            iframeRef.current.contentWindow.postMessage(JSON.stringify({ method: 'play' }), '*');
+            iframeRef.current.contentWindow.postMessage(JSON.stringify({ method: 'play' }), 'https://player.vimeo.com');
         }
     };
 
@@ -76,6 +78,7 @@ const DailyVideosSection = () => {
 
             if (res.ok) {
                 setStatus({ type: 'success', message: data.message || 'Success! Please check your email to verify.' });
+                trackNewsletterSubscription(email);
                 setEmail('');
 
                 // Disappear after 15 seconds
@@ -165,6 +168,25 @@ const DailyVideosSection = () => {
                         <div className="video-glow"></div>
                     </div>
                 </div>
+
+                {/* Footer Sub-section */}
+                <footer className="dv-footer">
+                    <div className="footer-line"></div>
+                    <div className="footer-content">
+                        <div className="footer-left">
+                            <span className="copyright">© {new Date().getFullYear()} UNVIKA TEAM. ALL RIGHTS RESERVED.</span>
+                        </div>
+                        <div className="footer-links">
+                            <a href="#hero" className="f-link">TOP</a>
+                            <a href="#newsletter" className="f-link">SUBSCRIBE</a>
+                        </div>
+                        <div className="footer-socials">
+                            <span className="social-placeholder">IG</span>
+                            <span className="social-placeholder">LI</span>
+                            <span className="social-placeholder">X</span>
+                        </div>
+                    </div>
+                </footer>
             </div>
             <Script src="https://player.vimeo.com/api/player.js" strategy="lazyOnload" />
         </section>

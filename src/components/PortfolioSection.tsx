@@ -111,23 +111,35 @@ const PortfolioSection = () => {
                                 gap: '1rem'
                             }}>
                                 <div style={{
-                                    width: '60px',
-                                    height: '60px',
+                                    width: '80px',
+                                    height: '80px',
                                     borderRadius: '50%',
-                                    border: '1px dashed rgba(255,255,255,0.2)',
+                                    border: '2px solid rgba(255, 107, 74, 0.3)',
                                     display: 'flex',
                                     alignItems: 'center',
-                                    justifyContent: 'center'
+                                    justifyContent: 'center',
+                                    overflow: 'hidden',
+                                    background: '#111',
+                                    boxShadow: '0 0 20px rgba(127, 0, 255, 0.2)'
                                 }}>
-                                    <span style={{ fontSize: '1.5rem', opacity: 0.3 }}>+</span>
+                                    <img
+                                        src={item === 1
+                                            ? "https://api.dicebear.com/7.x/notionists/svg?seed=Oliver&backgroundColor=b6e3f4"
+                                            : item === 2
+                                                ? "https://api.dicebear.com/7.x/notionists/svg?seed=Felix&backgroundColor=ffdfbf"
+                                                : "https://api.dicebear.com/7.x/notionists/svg?seed=Luna&backgroundColor=c0aede"}
+                                        alt="Client Avatar"
+                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                    />
                                 </div>
                                 <div style={{
                                     fontFamily: 'var(--font-mono)',
                                     fontSize: '0.75rem',
-                                    color: 'rgba(255,255,255,0.4)',
-                                    letterSpacing: '1px'
+                                    color: '#fff',
+                                    letterSpacing: '1px',
+                                    fontWeight: 600
                                 }}>
-                                    UPLOADING_IN_PENDING
+                                    {item === 1 ? "GYM" : item === 2 ? "HOTEL" : "TRAVEL AGENCY"}
                                 </div>
                             </div>
 
@@ -137,14 +149,29 @@ const PortfolioSection = () => {
                                 bottom: 0,
                                 left: 0,
                                 right: 0,
-                                padding: '15px',
-                                background: 'rgba(255, 255, 255, 0.02)',
+                                padding: '12px 15px',
+                                background: 'rgba(255, 255, 255, 0.03)',
                                 borderTop: '1px solid rgba(255, 255, 255, 0.05)',
                                 textAlign: 'left',
                                 zIndex: 2
                             }}>
-                                <div style={{ height: '8px', width: '40%', background: 'rgba(255,255,255,0.08)', borderRadius: '10px', marginBottom: '8px' }}></div>
-                                <div style={{ height: '6px', width: '25%', background: 'rgba(255,255,255,0.04)', borderRadius: '10px' }}></div>
+                                <div style={{
+                                    fontFamily: 'var(--font-mono)',
+                                    fontSize: '0.6rem',
+                                    color: 'rgba(255, 255, 255, 0.5)',
+                                    marginBottom: '4px'
+                                }}>
+                                    {item === 1 ? "Conversion Lift: +12%" : item === 2 ? "Lead Growth: +18%" : "System Efficiency: +25%"}
+                                </div>
+                                <div style={{ height: '2px', width: '60%', background: 'rgba(255,255,255,0.05)', borderRadius: '1px' }}>
+                                    <div style={{
+                                        height: '100%',
+                                        width: item === 1 ? '40%' : item === 2 ? '55%' : '65%',
+                                        background: '#7F00FF',
+                                        borderRadius: '1px',
+                                        opacity: 0.6
+                                    }}></div>
+                                </div>
                             </div>
                         </div>
                     ))}

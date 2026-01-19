@@ -1,0 +1,177 @@
+.ticker-container {
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
+    /* Removed padding to handle spacing purely via margins for perfect centering */
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+.ticker-track {
+    display: flex;
+    user-select: none;
+    width: fit-content;
+}
+
+.animate-marquee {
+    animation: marquee 80s linear infinite;
+    /* Slower, more subtle */
+}
+
+.animate-marquee-reverse {
+    animation: marquee-reverse 100s linear infinite;
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes marquee-reverse {
+    from {
+        transform: translateX(-50%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+.ticker-item {
+    flex-shrink: 0;
+    margin: 0 0.5rem;
+    /* Tighter gap */
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: transform 0.3s ease;
+}
+
+.ticker-item:hover {
+    transform: scale(1.05);
+    z-index: 10;
+}
+
+.pill {
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 750;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-white);
+    letter-spacing: 0.01em;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.pill::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 100px;
+    padding: 1px;
+    background: linear-gradient(90deg, var(--brand-pink), var(--brand-yellow), var(--brand-pink));
+    background-size: 200% 100%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    animation: slideGradient 3s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes slideGradient {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    100% {
+        background-position: 200% 0%;
+    }
+}
+
+.pill-problem {
+    background: var(--secondary-bg);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.pill-solution {
+    background: var(--secondary-bg);
+    border-color: rgba(255, 255, 255, 0.2);
+    /* Stronger outline for the 'solution' side */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.ticker-link-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.2);
+    /* Muted black instead of white */
+}
+
+/* Glass Icons */
+.pill-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin-right: -2px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-icon-wrong {
+    background: rgba(255, 255, 255, 0.05);
+    color: #ef4444;
+    /* Red for problem */
+}
+
+.glass-icon-right {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--brand-green);
+    /* Green for solution */
+}
+
+@media (max-width: 768px) {
+    .pill-icon {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+/* Pause on hover */
+.ticker-container:hover .ticker-track {
+    animation-play-state: paused;
+}
+
+@media (max-width: 768px) {
+    .ticker-container {
+        padding: 0.4rem 0;
+        gap: 0.15rem;
+    }
+
+    .pill {
+        padding: 4px 10px;
+        font-size: 0.65rem;
+    }
+}

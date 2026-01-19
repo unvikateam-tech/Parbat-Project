@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { newsletterSql, initNewsletterTable } from '../../../../lib/newsletter-db';
 import { nanoid } from 'nanoid';
+// @ts-ignore
+import * as Brevo from '@getbrevo/brevo';
 
 export async function POST(req: Request) {
     try {
@@ -45,50 +47,34 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "Database connectivity error", details: dbErr.message }, { status: 500 });
         }
 
-        // 2. Prepare Email Sending (PURE SMTP STRATEGY)
-        const smtpHost = process.env.SMTP_HOST || 'smtp-relay.brevo.com';
-        const smtpUser = process.env.SMTP_USER || 'parbatsales@outlook.com';
+        // 3. Send Email using Brevo API (Replacing SMTP)
+        const brevoApiKey = process.env.BREVO_API_KEY || process.env.SMTP_PASS; // Fallback to SMTP_PASS if user reused it
 
-        // Read SMTP Password from environment
-        const smtpPass = process.env.SMTP_PASS;
-
-        const senderEmail = "parbatsales@outlook.com";
-        const verificationUrl = `${new URL(req.url).origin}/api/newsletter/verify?token=${token}`;
-
-        console.log("Newsletter: Attempting to send email via SMTP...");
-
-        if (!smtpPass) {
-            console.error("Newsletter Error: No SMTP Password or API Key found in .env");
-            return NextResponse.json({
-                error: "Server Configuration Error",
-                details: "Missing Email Credentials"
-            }, { status: 500 });
+        if (!brevoApiKey) {
+            console.error("Newsletter Error: Missing BREVO_API_KEY");
+            return NextResponse.json({ error: "Server Configuration Error: Missing API Key" }, { status: 500 });
         }
 
-        const nodemailer = await import('nodemailer');
-        const transporter = nodemailer.createTransport({
-            host: smtpHost,
-            port: parseInt(process.env.SMTP_PORT || '587'),
-            secure: false, // 587 is usually false (STARTTLS)
-            auth: {
-                user: smtpUser,
-                pass: smtpPass,
-            },
-        });
+        const apiInstance = new Brevo.TransactionalEmailsApi();
+        apiInstance.setApiKey(Brevo.TransactionalEmailsApiApiKeys.apiKey, brevoApiKey);
+
+        const sendSmtpEmail = new Brevo.SendSmtpEmail();
+        const verificationUrl = `${new URL(req.url).origin}/api/newsletter/verify?token=${token}`;
+
+        sendSmtpEmail.subject = "Verify your Daily AI Insights subscription";
+        sendSmtpEmail.htmlContent = getEmailTemplate(verificationUrl);
+        sendSmtpEmail.sender = { "name": "Parbat", "email": "verification@parbatrajpaudel.com.np" };
+        sendSmtpEmail.to = [{ "email": email }];
 
         try {
-            await transporter.sendMail({
-                from: `"Unvika" <${senderEmail}>`,
-                to: email,
-                subject: "Verify your Daily AI Insights subscription",
-                html: getEmailTemplate(verificationUrl),
-            });
-            console.log("Newsletter: SMTP Send Success");
-        } catch (smtpErr: any) {
-            console.error("Newsletter SMTP Error:", smtpErr);
+            console.log("Newsletter: Attempting to send email via Brevo API...");
+            const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
+            console.log("Newsletter: Brevo API Success", data.body);
+        } catch (error: any) {
+            console.error("Newsletter Brevo API Error:", error);
             return NextResponse.json({
-                error: "SMTP Connection Failed",
-                details: smtpErr.message
+                error: "Failed to send verification email",
+                details: error.body || error.message
             }, { status: 500 });
         }
 
@@ -107,34 +93,50 @@ function getEmailTemplate(url: string) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verify your Email | Unvika</title>
+    <title>Verify your Email | Parbat</title>
+    <!--[if mso]>
+    <style type="text/css">
+    body, table, td, a {font-family: Arial, Helvetica, sans-serif !important;}
+    </style>
+    <![endif]-->
 </head>
-<body style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f4f4f5; margin: 0; padding: 0;">
-    <div style="max-width: 600px; margin: 40px auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+<body style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f0f0f0; margin: 0; padding: 0;">
+    <div style="max-width: 600px; margin: 40px auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.08);">
+        
+        <!-- Top Accent Line -->
+        <div style="height: 4px; background: linear-gradient(90deg, #FF6B4A, #FFA500);"></div>
+
         <!-- Header -->
-        <div style="background: #030014; padding: 30px; text-align: center;">
-            <h1 style="color: white; margin: 0; font-size: 24px; letter-spacing: 1px;">unvika</h1>
+        <div style="background: #080808; padding: 40px 0; text-align: center; border-bottom: 1px solid #222;">
+            <h1 style="color: #ffffff; margin: 0; font-size: 28px; letter-spacing: 2px; font-weight: 700; text-transform: uppercase;">Parbat</h1>
+            <p style="color: #666; font-size: 11px; text-transform: uppercase; letter-spacing: 3px; margin: 10px 0 0 0;">Engineered Growth Systems</p>
         </div>
 
         <!-- Body -->
-        <div style="padding: 40px 30px; text-align: center;">
-            <h2 style="color: #1a1a1a; margin-top: 0; font-size: 22px;">Verify your email address</h2>
-            <p style="color: #666; font-size: 16px; line-height: 1.6; margin-bottom: 30px;">
-                Thanks for starting your journey with Unvika! To start receiving our daily AI automation insights, please verify your email address.
+        <div style="padding: 50px 40px; text-align: center;">
+            <h2 style="color: #111; margin-top: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.5px;">Confirm Your Subscription</h2>
+            <p style="color: #555; font-size: 16px; line-height: 1.7; margin-bottom: 40px; max-width: 480px; margin-left: auto; margin-right: auto;">
+                You're one step away from joining the <strong>Parbat</strong> ecosystem. Verify your email to unlock daily insights on AI automation and high-ticket sales engineering.
             </p>
             
-            <a href="${url}" style="display: inline-block; background: #6600ff; color: white; text-decoration: none; padding: 16px 32px; border-radius: 12px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 15px rgba(102, 0, 255, 0.3);">Verify Email Address</a>
+            <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
+                <tr>
+                    <td align="center" style="border-radius: 8px; background: #FF6B4A;">
+                        <a href="${url}" style="display: inline-block; background: #FF6B4A; color: #ffffff; text-decoration: none; padding: 16px 40px; border-radius: 8px; font-weight: bold; font-size: 16px; border: 1px solid #FF6B4A; transition: all 0.3s ease;">Verify Email Address &rarr;</a>
+                    </td>
+                </tr>
+            </table>
             
-            <p style="margin-top: 30px; font-size: 14px; color: #999;">
-                This link will expire in 24 hours. If you didn't sign up, you can safely ignore this email.
+            <p style="margin-top: 40px; font-size: 13px; color: #999; line-height: 1.5;">
+                Link expires in 24 hours. If you didn't request this, you can safely ignore this email.
             </p>
         </div>
 
         <!-- Footer -->
-        <div style="background: #fafafa; padding: 20px; text-align: center; border-top: 1px solid #eee;">
-            <p style="font-size: 12px; color: #999; margin: 0;">
-                © ${new Date().getFullYear()} Unvika AI. All rights reserved.<br>
-                Engineers of Efficient Growth.
+        <div style="background: #fafafa; padding: 30px; text-align: center; border-top: 1px solid #eee;">
+            <p style="font-size: 12px; color: #aaa; margin: 0; line-height: 1.6;">
+                &copy; ${new Date().getFullYear()} Parbat Raj Paudel. All rights reserved.<br>
+                High-Performance Funnels & AI Automation.
             </p>
         </div>
     </div>

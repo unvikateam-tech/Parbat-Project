@@ -2,6 +2,7 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { trackCTAClick } from '../lib/analytics';
 import './PricingSection.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -50,30 +51,6 @@ const PricingSection: React.FC = () => {
                     }
                 }
             );
-
-            // Price animation
-            const priceEl = document.querySelector(".pricing-amount .price");
-            if (priceEl) {
-                gsap.fromTo(priceEl,
-                    { innerHTML: 0 },
-                    {
-                        innerHTML: 0,
-                        duration: 1.5,
-                        snap: { innerHTML: 1 },
-                        ease: "power2.out",
-                        scrollTrigger: {
-                            trigger: ".pricing-card",
-                            start: "top 90%",
-                        },
-                        onUpdate: function () {
-                            const val = Number(this.targets()[0].innerHTML);
-                            if (!isNaN(val)) {
-                                priceEl.innerHTML = "FREE";
-                            }
-                        }
-                    }
-                );
-            }
         }, sectionRef);
 
         ScrollTrigger.refresh();
@@ -87,14 +64,15 @@ const PricingSection: React.FC = () => {
     return (
         <section className="pricing-section" id="services" ref={sectionRef}>
             <div className="pricing-header">
-                <span className="section-tag">First Step</span>
-                <h2 className="section-title">Ready to <span className="highlight-text">Optimize?</span></h2>
-                <p className="section-subtitle">Start with a comprehensive audit to find exactly where you're losing revenue.</p>
+                <span className="section-tag">Bespoke Solutions</span>
+                <h2 className="section-title">No Packages. Just <span className="highlight-text">Results.</span></h2>
+                <p className="section-subtitle">
+                    I don't sell cookie-cutter plans. I build custom-engineered sales vehicles designed specifically for your business model and revenue targets.
+                </p>
             </div>
 
             <div className="pricing-container">
-                {/* Floating Images, Video & Website Preview - Behind the card */}
-                {/* ... (media omitted for brevity in target content but I'll keep them in replacement) ... */}
+                {/* Floating Media elements stay the same for visual depth */}
                 <div className="floating-media media-1">
                     <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop&q=80" alt="Analytics Dashboard" />
                 </div>
@@ -122,53 +100,62 @@ const PricingSection: React.FC = () => {
                     />
                 </div>
 
-                {/* Pricing Card */}
+                {/* Main Custom Package Card */}
                 <div className="pricing-card" id="pricing">
-                    <div className="pricing-badge">Limited Slots</div>
-                    <h2 className="pricing-title">Funnel Audit & Strategy</h2>
+                    <div className="pricing-badge">Custom Buildout</div>
+                    <h2 className="pricing-title">Performance Funnel Plan</h2>
                     <div className="pricing-amount">
-                        <span className="price">FREE</span>
+                        <span className="price" style={{ fontSize: '2.5rem' }}>BESPOKE</span>
                     </div>
                     <p className="pricing-description">
-                        A deep-dive diagnosis of your current sales process to identify conversion leaks and missed opportunities.
+                        The journey begins with a <strong>Free Comprehensive Audit</strong>. From there, we architect a funnel system unique to your expertise.
                     </p>
 
                     <ul className="features-list">
                         <li>
                             <span className="check-icon">✓</span>
-                            Conversion Leak Diagnosis
+                            Traffic Activation
                         </li>
                         <li>
                             <span className="check-icon">✓</span>
-                            Funnel Structure Planning
+                            Lead Capture
                         </li>
                         <li>
                             <span className="check-icon">✓</span>
-                            Messaging Strategy Roadmap
+                            Lead Qualification
                         </li>
                         <li>
                             <span className="check-icon">✓</span>
-                            45-Minute Strategy Call
+                            Automated Nurture
                         </li>
                         <li>
                             <span className="check-icon">✓</span>
-                            Custom Growth Roadmap
+                            Conversion Interface
+                        </li>
+                        <li>
+                            <span className="check-icon">✓</span>
+                            Revenue & Operations Tracking
+                        </li>
+                        <li>
+                            <span className="check-icon">✓</span>
+                            Customer Support & Retention
                         </li>
                     </ul>
 
-                    <a href="/schedule" className="pricing-cta">
-                        Get Your Free Audit
+                    <a
+                        href="/schedule"
+                        className="pricing-cta"
+                        onClick={() => trackCTAClick('Pricing - Start Custom Plan', '/schedule')}
+                    >
+                        Start Your Custom Plan
                         <span className="arrow">→</span>
                     </a>
                 </div>
             </div>
 
-            {/* See More Button */}
-            <div className="pricing-see-more">
-                <a href="/packages" className="see-more-btn">
-                    See All Packages
-                    <span className="arrow">→</span>
-                </a>
+            <div className="guarantee" style={{ marginTop: '2rem', opacity: 0.7 }}>
+                <span className="guarantee-icon">🔒</span>
+                <span>Every plan is architected around your specific ROI goals.</span>
             </div>
         </section>
     );

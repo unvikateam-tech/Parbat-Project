@@ -25,7 +25,7 @@ const Header: React.FC = () => {
             <a href="/" className="header-logo">
               <div className="logo-brand-details">
                 <span className="brand-name">
-                  PARBAT<span style={{ color: 'var(--brand-pink)' }}>_</span>
+                  <span>PARBAT</span><span style={{ color: 'var(--brand-pink)' }}>_</span>
                 </span>
               </div>
             </a>

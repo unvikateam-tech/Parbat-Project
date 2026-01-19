@@ -40,12 +40,12 @@ const BenefitCards: React.FC = () => {
             lottieUrl: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f62d/lottie.json"
         },
         {
-            title: "High Drop-off",
-            description: "Slow response times kill conversions. 78% of customers buy from the business that responds first.",
+            title: "High Drop-off*",
+            description: "Slow response times kill conversions. 78% of customers buy from the business that responds first. Every minute of delay leads to a dramatic lose in trust and revenue.",
             bgColor: "#EE6147",
             textColor: "#000000",
-            stats: "65%",
-            statsLabel: "Leads Recovered",
+            stats: "38%+",
+            statsLabel: "Qualified Leads",
             lottieUrl: "https://fonts.gstatic.com/s/e/notoemoji/latest/1f605/lottie.json"
         },
         {
@@ -89,24 +89,27 @@ const BenefitCards: React.FC = () => {
             // Stats counter animation for the middle card
             const statNumbers = gsap.utils.toArray<HTMLElement>(".stats-number-bold");
             statNumbers.forEach((stat) => {
-                const targetValue = parseInt(stat.innerText);
-                const suffix = stat.innerText.replace(/[0-9]/g, '');
+                const rawValue = stat.getAttribute('data-target') || '0';
+                const targetValue = parseInt(rawValue.replace(/[^0-9]/g, '')) || 0;
+                const suffix = rawValue.replace(/[0-9]/g, '');
+                const obj = { val: 0 };
 
-                gsap.fromTo(stat,
-                    { innerHTML: 0 },
-                    {
-                        innerHTML: targetValue,
-                        duration: 1.5,
-                        ease: "power2.out",
-                        scrollTrigger: {
-                            trigger: stat,
-                            start: "top 90%",
-                        },
-                        onUpdate: function () {
-                            stat.innerHTML = Math.ceil(this.targets()[0].innerHTML) + suffix;
-                        }
+                // Set initial text to 0 to avoid seeing the target value before animation
+                stat.innerHTML = "0" + suffix;
+
+                gsap.to(obj, {
+                    val: targetValue,
+                    duration: 1.5,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: stat,
+                        start: "top 90%",
+                        toggleActions: "play none none none"
+                    },
+                    onUpdate: () => {
+                        stat.innerHTML = Math.floor(obj.val).toString() + suffix;
                     }
-                );
+                });
             });
         }, sectionRef);
 
@@ -147,7 +150,7 @@ const BenefitCards: React.FC = () => {
                                         {card.stats ? (
                                             <div className="card-stats-row-alt">
                                                 <div className="card-stats-group">
-                                                    <span className="stats-number-bold">{card.stats}</span>
+                                                    <span className="stats-number-bold" data-target={card.stats}>{card.stats}</span>
                                                     <span className="stats-label-bold">{card.statsLabel}</span>
                                                 </div>
                                                 <div className="card-arrow-icon">

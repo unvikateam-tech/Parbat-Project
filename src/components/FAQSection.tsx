@@ -94,10 +94,6 @@ const FAQSection: React.FC = () => {
                     ))}
                 </div>
 
-                <div className="faq-footer">
-                    <p>Have a different question?</p>
-                    <a href="/schedule" className="contact-link">Get a free audit instead →</a>
-                </div>
             </div>
         </section>
     );
