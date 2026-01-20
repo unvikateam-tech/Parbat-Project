@@ -92,10 +92,8 @@
 
 /* CARD DESIGN */
 .visionary-card {
-    width: 420px;
-    /* Reduced from 480px */
-    height: 240px;
-    /* Reduced from 280px */
+    width: 450px;
+    height: 300px;
     background: #ffffff;
     /* Clean Solid White */
     border: 1px solid rgba(0, 0, 0, 0.05);
@@ -119,7 +117,7 @@
 /* LEFT COLUMN: Content */
 .visionary-card-left {
     flex: 1.2;
-    padding: 2rem;
+    padding: 1.75rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -129,19 +127,19 @@
 
 /* Quote Icon Box */
 .quote-box-icon {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     background: var(--brand-pink);
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 4px;
-    margin-bottom: 1rem;
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
 }
 
 .quote-box-icon svg {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     fill: white;
     stroke: none;
 }
@@ -157,17 +155,18 @@
 
 /* Quote Text */
 .visionary-quote-text {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     font-weight: 700;
-    line-height: 1.4;
+    line-height: 1.5;
     color: #111111;
     /* Deep Black for contrast */
     margin-bottom: 1rem;
     display: -webkit-box;
-    -webkit-line-clamp: 4;
-    line-clamp: 4;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    flex-grow: 1;
 }
 
 .v-highlight {
@@ -199,6 +198,97 @@
 
 .reality-header {
     margin-bottom: 4rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.new-reality-header {
+    width: 100%;
+    padding: 10rem 0;
+    margin-bottom: 4rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* Left Aligned */
+    justify-content: center;
+    overflow: hidden;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    text-align: left;
+    /* Left Aligned */
+}
+
+.new-reality-content {
+    max-width: 900px;
+    padding-left: 5%;
+    position: relative;
+    z-index: 5;
+}
+
+.glass-pill-container {
+    display: inline-block;
+    margin-top: 0.5rem;
+}
+
+.glass-pill {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 100px;
+    padding: 0.4rem 2rem;
+    box-shadow:
+        0 8px 32px 0 rgba(0, 0, 0, 0.3),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.header-bg-image {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.header-bg-image img {
+    position: absolute;
+    right: 2%;
+    /* Bring it in from the far edge */
+    top: 50%;
+    transform: translateY(-50%);
+    height: 85%;
+    /* Keep it within the height of the section to prevent cropping */
+    width: auto;
+    object-fit: contain;
+    /* Ensure the whole subject is visible */
+    opacity: 0.6;
+    /* Soft blend rather than hard crop */
+    mask-image: linear-gradient(to left,
+            rgba(0, 0, 0, 1) 0%,
+            rgba(0, 0, 0, 0.4) 40%,
+            rgba(0, 0, 0, 0) 80%);
+    -webkit-mask-image: linear-gradient(to left,
+            rgba(0, 0, 0, 1) 0%,
+            rgba(0, 0, 0, 0.4) 40%,
+            rgba(0, 0, 0, 0) 80%);
+    filter: brightness(1.1) contrast(1.1);
+    transition: opacity 0.3s ease;
+}
+
+.desktop-bg {
+    display: block;
+}
+
+.mobile-bg {
+    display: none;
 }
 
 .reality-label {
@@ -211,19 +301,25 @@
     display: inline-block;
     letter-spacing: 1px;
     text-transform: uppercase;
-    margin-bottom: 0.5rem;
-    /* Reduced from 1.25rem */
+    margin-bottom: 1.5rem;
     box-shadow: 0 4px 15px rgba(255, 36, 143, 0.3);
+    position: relative;
+    z-index: 2;
 }
 
 /* This .reality-title is for the main section header */
 .reality-title {
-    font-size: clamp(3rem, 6vw, 6rem);
-    font-weight: 900;
-    line-height: 1;
+    font-family: "roc-grotesk", var(--font-archivo), sans-serif;
+    font-size: clamp(2.2rem, 6vw, 3.8rem);
+    font-weight: 1000;
+    line-height: 1.05;
     color: #fff;
     text-transform: uppercase;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.2rem;
+    position: relative;
+    z-index: 3;
+    letter-spacing: -0.02em;
+    text-shadow: 0 4px 25px rgba(0, 0, 0, 1);
 }
 
 .reality-title span {
@@ -231,18 +327,75 @@
 }
 
 .reality-desc {
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.6);
+    font-family: var(--font-inter), sans-serif;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
     max-width: 600px;
     line-height: 1.6;
+    margin-left: 0;
+    /* Left aligned */
+    margin-right: auto;
+    position: relative;
+    z-index: 3;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
+    font-weight: 500;
 }
 
-/* Grid Layout */
-.reality-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+/* Text Only UI for Generations */
+.generations-text-ui {
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
     gap: 1.5rem;
+    align-items: flex-start;
+    padding-left: 2rem;
 }
+
+.gen-text-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.gen-text-item {
+    font-family: "roc-grotesk", var(--font-archivo), sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2.8rem);
+    font-weight: 1000;
+    color: #fff;
+    letter-spacing: -0.02em;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.gen-text-item:hover {
+    color: var(--brand-pink);
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.gen-text-dot {
+    color: var(--brand-orange);
+    font-size: 2rem;
+    opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+    .generations-text-ui {
+        padding-left: 1rem;
+        gap: 1rem;
+    }
+
+    .gen-text-item {
+        font-size: 1.5rem;
+    }
+
+    .gen-text-dot {
+        font-size: 1.2rem;
+    }
+}
+
 
 /* DARK CARD DESIGN (Unvika Essence) */
 .reality-card {
@@ -524,12 +677,61 @@
         padding-top: 4rem !important;
     }
 
-    .reality-title {
-        font-size: 2.5rem;
-        /* Slightly smaller on mobile but still big */
+    .reality-header:not(.new-reality-header) {
+        margin-bottom: 1.5rem !important;
+        /* Override inline style for mobile */
     }
 
-    .reality-header {
-        margin-bottom: 2rem;
+    .reality-title {
+        font-size: clamp(1.6rem, 7vw, 2.2rem) !important;
+        line-height: 1.2;
+        margin-bottom: 0.5rem !important;
+        /* Even less space */
+    }
+
+    .glass-pill {
+        padding: 0.25rem 1rem !important;
+        /* Smaller width */
+        font-size: 0.85em;
+        /* Proportional text */
+        white-space: nowrap;
+        /* Keep on one line */
+    }
+
+    .new-reality-header {
+        padding: 4rem 0 0 0 !important;
+        /* Reduced bottom padding to zero */
+        align-items: center !important;
+        text-align: center !important;
+        min-height: 300px !important;
+        /* Reduced min-height */
+    }
+
+    .new-reality-content {
+        padding-left: 0;
+        padding: 0 1.5rem;
+    }
+
+    .reality-desc {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .desktop-bg {
+        display: none !important;
+    }
+
+    .mobile-bg {
+        display: block !important;
+        height: 100% !important;
+        width: 100% !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        transform: none !important;
+        object-fit: cover !important;
+        opacity: 0.55 !important;
+        mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent) !important;
+        -webkit-mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent) !important;
     }
 }

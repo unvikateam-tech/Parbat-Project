@@ -60,9 +60,9 @@
 /* CRITICAL HEADER STYLES (Consolidated to prevent conflicts) */
 .app-header {
   position: fixed;
-  top: 30px;
-  /* Moved down by 5px more */
-  top: calc(30px + env(safe-area-inset-top));
+  top: 40px;
+  /* Moved down by 10px more */
+  top: calc(40px + env(safe-area-inset-top));
   left: 0;
   width: 100%;
   height: auto;
@@ -79,8 +79,18 @@
 
 @media (max-width: 1023px) {
   .app-header {
-    top: 35px !important;
-    top: calc(35px + env(safe-area-inset-top)) !important;
+    top: 45px !important;
+    top: calc(45px + env(safe-area-inset-top)) !important;
+  }
+}
+
+@keyframes revolve-shine {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -91,26 +101,62 @@
   justify-content: center;
   align-items: center;
   padding: 0 1.25rem;
-  background: rgba(15, 13, 14, 0.95);
-  backdrop-filter: blur(15px) saturate(180%);
-  -webkit-backdrop-filter: blur(15px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  background: rgba(15, 13, 14, 0.4);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 100px;
   height: 48px;
-  /* Default height */
   width: var(--nav-width);
   max-width: var(--nav-max-width);
   position: relative;
-  /* Centered by .app-header flexbox */
   flex-shrink: 0;
   pointer-events: auto !important;
   box-sizing: border-box;
   overflow: hidden;
-  /* Hide content when collapsed */
   z-index: 20010;
   transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: height, background;
+  isolation: isolate;
+}
+
+.pill-nav-container::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  padding: 4px;
+  background: conic-gradient(from 0deg,
+      transparent 0%,
+      transparent 35%,
+      rgba(255, 36, 143, 0.6) 45%,
+      var(--brand-pink) 50%,
+      rgba(255, 36, 143, 0.6) 55%,
+      transparent 65%,
+      transparent 100%);
+  border-radius: 100px;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+  animation: revolve-shine 4s linear infinite;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.pill-nav-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  backdrop-filter: inherit;
+  -webkit-backdrop-filter: inherit;
+  border-radius: inherit;
+  z-index: -1;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
 .pill-nav-container.menu-expanded {
@@ -163,6 +209,7 @@
     border-radius: 20px !important;
     height: 42px;
     padding: 0 1rem;
+    border: 1.5px solid var(--brand-pink) !important;
   }
 
   .pill-nav-container.menu-expanded {
@@ -409,30 +456,18 @@ h1 {
   letter-spacing: -0.01em;
 }
 
-.nav-menu li a:hover {
-  color: var(--brand-pink) !important;
-  /* Pink on hover */
+.hero-btn,
+.nav-btn,
+.mobile-btn,
+.dv-subscribe-btn,
+.dv-play-btn-capsule,
+.cta-button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
 }
 
-.nav-buttons.desktop-buttons {
-  display: flex !important;
-  align-items: center;
-  gap: 0.75rem;
-  flex-shrink: 0;
-  visibility: visible !important;
-  opacity: 1 !important;
-  pointer-events: auto !important;
-}
 
-.nav-btn {
-  padding: 0.45rem 1rem;
-  border-radius: 100px;
-  font-size: 0.75rem;
-  font-weight: 800;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-}
 
 .youtube-btn {
   display: flex !important;
@@ -778,10 +813,10 @@ h1 {
 /* Default visibility handled by media queries below */
 .hero-headline {
   font-family: var(--font-header) !important;
-  font-size: clamp(2.2rem, 5.5vw, 4rem) !important;
-  /* Smaller headline as requested */
+  font-size: clamp(2.5rem, 7vw, 5.5rem) !important;
+  /* Bigger headline as requested */
   font-weight: 950 !important;
-  line-height: 1.1 !important;
+  line-height: 1.05 !important;
   letter-spacing: 0.04em !important;
   text-transform: uppercase;
   color: #fff;
@@ -2155,8 +2190,8 @@ h1 {
 /* Mobile Full Screen Menu Overlay */
 .mobile-menu-overlay {
   position: fixed;
-  top: 1.25rem;
-  /* Matches lowered header exactly */
+  top: 40px;
+  /* Matches lowered header */
   left: 50%;
   transform: translateX(-50%);
   width: var(--nav-width);
@@ -2197,6 +2232,12 @@ h1 {
   animation: menuRollOpen 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   visibility: visible;
   transition: visibility 0s linear 0s;
+}
+
+@media (max-width: 1023px) {
+  .mobile-menu-overlay {
+    top: 45px !important;
+  }
 }
 
 @keyframes menuRollOpen {

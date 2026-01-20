@@ -108,8 +108,8 @@
 }
 
 .dv-title {
-    font-size: clamp(2rem, 4.5vw, 3.2rem);
-    /* Slightly smaller font */
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    /* Slightly bigger font */
     line-height: 1.05;
     /* Tightened line height */
     font-weight: 850;

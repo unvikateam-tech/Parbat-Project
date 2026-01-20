@@ -92,7 +92,8 @@
 }
 
 .about-home-title {
-    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-size: clamp(3.2rem, 7vw, 4.8rem);
+    /* Slightly larger */
     font-weight: 850;
     color: #000;
     line-height: 0.95;

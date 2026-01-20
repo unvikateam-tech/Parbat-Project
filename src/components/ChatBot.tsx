@@ -291,28 +291,30 @@ const ChatBot: React.FC = () => {
                 </div>
 
                 <form className="chatbot-input" onSubmit={handleSendMessage}>
-                    <button
-                        type="button"
-                        className={`voice-btn ${isListening ? 'listening' : ''} ${isTranscribing ? 'transcribing' : ''}`}
-                        onClick={toggleVoice}
-                        disabled={isTranscribing}
-                        title={isTranscribing ? "Transcribing..." : "Speech to Text"}
-                    >
-                        {isTranscribing ? (
-                            <div className="voice-loader"></div>
-                        ) : (
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" /><path d="M19 10v2a7 7 0 01-14 0v-2" /><line x1="12" y1="19" x2="12" y2="23" /><line x1="8" y1="23" x2="16" y2="23" /></svg>
-                        )}
-                    </button>
-                    <input
-                        type="text"
-                        placeholder="Type a message..."
-                        value={inputText}
-                        onChange={(e) => setInputText(e.target.value)}
-                    />
-                    <button className="send-btn" type="submit" disabled={!inputText.trim() || isTyping}>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" /></svg>
-                    </button>
+                    <div className="input-container">
+                        <button
+                            type="button"
+                            className={`voice-btn ${isListening ? 'listening' : ''} ${isTranscribing ? 'transcribing' : ''}`}
+                            onClick={toggleVoice}
+                            disabled={isTranscribing}
+                            title={isTranscribing ? "Transcribing..." : "Speech to Text"}
+                        >
+                            {isTranscribing ? (
+                                <div className="voice-loader"></div>
+                            ) : (
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" /><path d="M19 10v2a7 7 0 01-14 0v-2" /><line x1="12" y1="19" x2="12" y2="23" /><line x1="8" y1="23" x2="16" y2="23" /></svg>
+                            )}
+                        </button>
+                        <input
+                            type="text"
+                            placeholder="Type a message..."
+                            value={inputText}
+                            onChange={(e) => setInputText(e.target.value)}
+                        />
+                        <button className="send-btn" type="submit" disabled={!inputText.trim() || isTyping}>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" /></svg>
+                        </button>
+                    </div>
                 </form>
 
                 <div className="chatbot-footer">

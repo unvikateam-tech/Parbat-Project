@@ -3,7 +3,7 @@ import React, { useRef, useEffect } from 'react';
 import './RealitySection.css';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Bot, Mic, Workflow, Sparkles, BrainCircuit, Cpu, Zap, Clock, ChevronLeft, ChevronRight, Code, BarChart, Scale, Brain } from 'lucide-react';
+import { Bot, Mic, Workflow, Sparkles, BrainCircuit, Cpu, Zap, Clock, ChevronLeft, ChevronRight, Code, BarChart, Scale, Brain, Type, Palette, Boxes, Activity, Globe, Play } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -192,7 +192,7 @@ const RealitySection = () => {
             imgPosition: "center top",
             imgScale: "1.6",
             imgTranslateX: "-10%",
-            imgTranslate: "-25%"
+            imgTranslate: "-35%"
         },
         {
             quote: "AI is one of the most important things humanity is working on. It is more profound than fire or electricity.",
@@ -279,18 +279,17 @@ const RealitySection = () => {
     const quoteSlides = [...baseSlides, ...baseSlides];
 
     const realityCards = [
-        { title: "Image Generation", icon: <Sparkles size={28} color="white" />, num: "01" },
-        { title: "Voice Assistants", icon: <Mic size={28} color="white" />, num: "02" },
-        { title: "Workflow Automation", icon: <Workflow size={28} color="white" />, num: "03" },
-        { title: "Video Generation", icon: <Zap size={28} color="white" />, num: "04" },
-        { title: "Contextual Agents", icon: <BrainCircuit size={28} color="white" />, num: "05" },
-        { title: "Realtime Agents", icon: <Clock size={28} color="white" />, num: "06" },
-        { title: "Internal Tools", icon: <Cpu size={28} color="white" />, num: "07" },
-        { title: "Content Creation", icon: <Bot size={28} color="white" />, num: "08" },
-        { title: "Code Generation", icon: <Code size={28} color="white" />, num: "09" },
-        { title: "Data Analytics", icon: <BarChart size={28} color="white" />, num: "10" },
-        { title: "Legal Automation", icon: <Scale size={28} color="white" />, num: "11" },
-        { title: "Custom LLMs", icon: <Brain size={28} color="white" />, num: "12" },
+        { title: "Text", icon: <Type size={28} color="white" /> },
+        { title: "Images", icon: <Sparkles size={28} color="white" /> },
+        { title: "Audio", icon: <Mic size={28} color="white" /> },
+        { title: "Video", icon: <Zap size={28} color="white" /> },
+        { title: "Code", icon: <Code size={28} color="white" /> },
+        { title: "Data & Insights", icon: <BarChart size={28} color="white" /> },
+        { title: "3D & Design Assets", icon: <Boxes size={28} color="white" /> },
+        { title: "Knowledge Structures", icon: <Brain size={28} color="white" /> },
+        { title: "Simulations", icon: <Activity size={28} color="white" /> },
+        { title: "Virtual Environments", icon: <Globe size={28} color="white" /> },
+        { title: "Animation", icon: <Play size={28} color="white" /> },
     ];
 
     return (
@@ -299,7 +298,7 @@ const RealitySection = () => {
 
             <div className="reality-container">
                 {/* Section Header for Quotes */}
-                <div className="reality-header" style={{ marginBottom: '3rem', textAlign: 'center' }}>
+                <div className="reality-header" style={{ marginBottom: '3rem' }}>
                     <span className="reality-label">THE PARADIGM SHIFT</span>
                     <h2 className="reality-title">
                         WHAT VISIONARIES <br />
@@ -420,26 +419,49 @@ const RealitySection = () => {
                 </div>
 
                 {/* 2. The Reality Grid */}
-                <div className="reality-header">
-                    <span className="reality-label">THE NEW REALITY</span>
-                    <h2 className="reality-title">
-                        GENAI IS NOT JUST THE FUTURE <br />
-                        <span className="highlight-text">IT IS THE PRESENT</span>
-                    </h2>
-                    <p className="reality-desc">
-                        The era of manual operations is over. Businesses that adopt AI agents and automated workflows today will dominate. Those who don't will be left behind.
-                    </p>
+                <div className="reality-header new-reality-header">
+                    <div className="header-bg-image">
+                        <img src="/NEW REALITY.png" alt="New Reality Background" className="desktop-bg" />
+                        <img src="/NEW REALITY1.png" alt="New Reality Background Mobile" className="mobile-bg" />
+                    </div>
+                    <div className="new-reality-content">
+                        <span className="reality-label">THE NEW ERA</span>
+                        <h2 className="reality-title">
+                            GEN AI <br />
+                            <span className="glass-pill-container" style={{ margin: '0.5rem 0' }}>
+                                <span className="highlight-text glass-pill">GENERATIONS</span>
+                            </span>
+                        </h2>
+                    </div>
                 </div>
 
-                <div className="reality-grid">
-                    {realityCards.map((card, index) => (
-                        <div className="reality-card" key={index}>
-                            <div className="rc-icon">
-                                {card.icon}
-                            </div>
-                            <h4 className="rc-title">{card.title}</h4>
-                        </div>
-                    ))}
+                <div className="generations-text-ui">
+                    <div className="gen-text-row">
+                        <span className="gen-text-item">TEXT</span>
+                        <span className="gen-text-dot">•</span>
+                        <span className="gen-text-item">IMAGES</span>
+                        <span className="gen-text-dot">•</span>
+                        <span className="gen-text-item">AUDIO</span>
+                        <span className="gen-text-dot">•</span>
+                        <span className="gen-text-item">VIDEO</span>
+                    </div>
+                    <div className="gen-text-row">
+                        <span className="gen-text-item">CODE</span>
+                        <span className="gen-text-dot">•</span>
+                        <span className="gen-text-item">DATA & INSIGHTS</span>
+                        <span className="gen-text-dot">•</span>
+                        <span className="gen-text-item">3D & DESIGN ASSETS</span>
+                    </div>
+                    <div className="gen-text-row">
+                        <span className="gen-text-item">KNOWLEDGE STRUCTURES</span>
+                        <span className="gen-text-dot">•</span>
+                        <span className="gen-text-item">SIMULATIONS</span>
+                    </div>
+                    <div className="gen-text-row">
+                        <span className="gen-text-item">VIRTUAL ENVIRONMENTS</span>
+                        <span className="gen-text-dot">•</span>
+                        <span className="gen-text-item">ANIMATION</span>
+                    </div>
                 </div>
             </div>
         </section>

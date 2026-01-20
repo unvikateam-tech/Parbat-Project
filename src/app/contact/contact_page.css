@@ -200,6 +200,27 @@
     margin-top: 3rem;
 }
 
+.back-btn {
+    background: none;
+    border: none;
+    color: var(--brand-pink);
+    font-weight: 800;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    padding: 0 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: none;
+    outline: none;
+}
+
+.back-btn:hover {
+    color: #ff1a8c;
+    transform: translateX(-3px);
+}
+
+
 .submit-form-btn {
     flex: 1;
     padding: 1.25rem;
