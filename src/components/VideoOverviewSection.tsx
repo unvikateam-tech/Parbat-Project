@@ -87,17 +87,31 @@ const VideoOverviewSection: React.FC = () => {
                 scrollTrigger: {
                     trigger: sectionRef.current,
                     start: "top 70%",
-                    toggleActions: "play none none reverse"
+                    toggleActions: "play none none none"
                 }
             });
 
             tl.fromTo(".header-content",
-                { opacity: 0, y: 50 },
-                { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
+                { opacity: 0, y: 30, filter: 'blur(10px)' },
+                { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1, ease: "power4.out" }
             )
                 .fromTo(".video-main-frame",
-                    { opacity: 0, y: 80, scale: 0.95 },
-                    { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "expo.out" }, "-=0.6"
+                    {
+                        opacity: 0,
+                        y: 100,
+                        scale: 0.8,
+                        rotationX: -15,
+                        filter: 'blur(20px)'
+                    },
+                    {
+                        opacity: 1,
+                        y: -2.5, // Adjusted another 2px down from -4.5
+                        scale: 1,
+                        rotationX: 0,
+                        filter: 'blur(0px)',
+                        duration: 1.5,
+                        ease: "elastic.out(1, 0.75)" // This creates the "gasp/bounce" effect
+                    }, "-=0.7"
                 );
 
         }, sectionRef);

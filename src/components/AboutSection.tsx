@@ -12,12 +12,13 @@ const AboutSection = () => {
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            // Fade in texts
-            gsap.from(".about-home-tag, .about-home-title, .about-home-description, .home-vision-item", {
+            // Fade in texts with blur and gasp
+            gsap.from(".about-home-tag, .about-home-title, .about-home-description, .founder-signature", {
                 y: 50,
                 opacity: 0,
-                duration: 1,
-                stagger: 0.2,
+                filter: 'blur(20px)',
+                duration: 1.2,
+                stagger: 0.15,
                 ease: "power3.out",
                 scrollTrigger: {
                     trigger: sectionRef.current,
@@ -25,15 +26,31 @@ const AboutSection = () => {
                 }
             });
 
-            // Animate illustration
+            // Animate illustration with gasp
             gsap.from(".about-illustration", {
-                scale: 0.8,
+                scale: 0.6,
                 opacity: 0,
+                filter: 'blur(30px)',
                 duration: 1.5,
-                ease: "power2.out",
+                ease: "elastic.out(1, 0.75)",
                 scrollTrigger: {
                     trigger: sectionRef.current,
                     start: "top 80%",
+                }
+            });
+
+            // Staggered indicators with gasp
+            gsap.from(".home-stat-card, .floating-indicator, .floating-badge", {
+                y: 40,
+                opacity: 0,
+                scale: 0.8,
+                filter: 'blur(15px)',
+                duration: 1,
+                stagger: 0.1,
+                ease: "elastic.out(1, 0.8)",
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top 75%",
                 }
             });
 

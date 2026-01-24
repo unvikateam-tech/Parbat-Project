@@ -1,8 +1,18 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
 
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  // Entrance animation
+  useEffect(() => {
+    gsap.fromTo(headerRef.current,
+      { y: -20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.8, delay: 0.5, ease: "power3.out" }
+    );
+  }, []);
 
   // Prevent scroll when menu is open
   useEffect(() => {
@@ -18,15 +28,21 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <header className="app-header">
+      <header className="app-header" ref={headerRef} style={{ opacity: 0 }}>
         <div className="pill-nav-container">
           <div className="pill-main-row">
             {/* Logo on the left */}
             <a href="/" className="header-logo">
-              <div className="logo-brand-details">
-                <span className="brand-name">
-                  <span>PARBAT</span><span style={{ color: 'var(--brand-pink)' }}>_</span>
-                </span>
+              {/* Mobile Version: Simple Text */}
+              <span className="mobile-logo-text">
+                PARBAT<span className="pink-underscore">_</span>
+              </span>
+
+              {/* Desktop Version: Badge UI */}
+              <div className="desktop-logo-badge">
+                <span className="badge-tag">PARBAT</span>
+                <span className="badge-text">Raj Paudel</span>
+                <span className="badge-arrow">→</span>
               </div>
             </a>
 

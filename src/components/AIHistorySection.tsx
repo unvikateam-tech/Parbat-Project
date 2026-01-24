@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './AIHistorySection.css';
 
+gsap.registerPlugin(ScrollTrigger);
+
 const AIHistorySection = () => {
+    const sectionRef = useRef<HTMLElement>(null);
     const phases = [
         {
             id: "stats",
@@ -86,8 +91,50 @@ const AIHistorySection = () => {
         }
     ];
 
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.from(".ai-history-header", {
+                y: 50,
+                opacity: 0,
+                filter: 'blur(20px)',
+                duration: 1.2,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top 85%"
+                }
+            });
+
+            gsap.from(".ai-card", {
+                y: 80,
+                opacity: 0,
+                scale: 0.8,
+                filter: 'blur(25px)',
+                duration: 1.5,
+                stagger: 0.1,
+                ease: "elastic.out(1, 0.75)",
+                scrollTrigger: {
+                    trigger: ".ai-grid",
+                    start: "top 85%"
+                }
+            });
+
+            gsap.from(".agi-conclusion", {
+                y: 40,
+                opacity: 0,
+                filter: 'blur(10px)',
+                duration: 1,
+                scrollTrigger: {
+                    trigger: ".agi-conclusion",
+                    start: "top 90%"
+                }
+            });
+        }, sectionRef);
+        return () => ctx.revert();
+    }, []);
+
     return (
-        <section className="ai-history-section">
+        <section className="ai-history-section" ref={sectionRef}>
             <div className="ai-history-container">
                 <div className="ai-history-header">
                     <h2 className="ai-history-title">Evolution of Intellect</h2>

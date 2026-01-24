@@ -28,16 +28,17 @@ const RealitySection = () => {
 
             // Animate Paradigm Shift Header with dramatic entrance
             gsap.fromTo(".reality-header",
-                { y: 60, opacity: 0, scale: 0.95 },
+                { y: 60, opacity: 0, scale: 0.8, filter: 'blur(20px)' },
                 {
                     y: 0,
                     opacity: 1,
                     scale: 1,
+                    filter: 'blur(0px)',
                     duration: 1.2,
-                    ease: "power3.out",
+                    ease: "elastic.out(1, 0.5)",
                     scrollTrigger: {
                         trigger: ".reality-header",
-                        start: "top 85%"
+                        start: "top 100%"
                     }
                 }
             );
@@ -55,12 +56,12 @@ const RealitySection = () => {
                     opacity: 1,
                     scale: 1,
                     rotateY: 0,
-                    duration: 1,
-                    stagger: 0.15,
+                    duration: 0.8,
+                    stagger: 0.1,
                     ease: "back.out(1.2)",
                     scrollTrigger: {
                         trigger: ".visionaries-scroll-wrapper",
-                        start: "top 80%"
+                        start: "top 95%"
                     }
                 }
             );
@@ -85,22 +86,24 @@ const RealitySection = () => {
                 {
                     y: 50,
                     opacity: 0,
-                    scale: 0.85
+                    scale: 0.7,
+                    filter: 'blur(15px)'
                 },
                 {
                     y: 0,
                     opacity: 1,
                     scale: 1,
-                    duration: 0.9,
+                    filter: 'blur(0px)',
+                    duration: 1,
                     stagger: {
-                        amount: 0.8,
+                        amount: 0.5,
                         from: "start",
                         ease: "power2.out"
                     },
-                    ease: "power3.out",
+                    ease: "elastic.out(1, 0.75)",
                     scrollTrigger: {
                         trigger: ".reality-grid",
-                        start: "top 85%"
+                        start: "top 100%"
                     }
                 }
             );
@@ -298,7 +301,7 @@ const RealitySection = () => {
 
             <div className="reality-container">
                 {/* Section Header for Quotes */}
-                <div className="reality-header" style={{ marginBottom: '3rem' }}>
+                <div className="reality-header" style={{ marginBottom: '1.5rem', paddingTop: '0' }}>
                     <span className="reality-label">THE PARADIGM SHIFT</span>
                     <h2 className="reality-title">
                         WHAT VISIONARIES <br />
@@ -432,36 +435,13 @@ const RealitySection = () => {
                                 <span className="highlight-text glass-pill">GENERATIONS</span>
                             </span>
                         </h2>
+                        <p className="reality-desc">
+                            Explore the vast landscape of synthetic creation. From data to immersive environments, AI is redefining the boundaries of what is possible.
+                        </p>
                     </div>
                 </div>
 
                 <div className="generations-text-ui">
-                    <div className="gen-text-row">
-                        <span className="gen-text-item">TEXT</span>
-                        <span className="gen-text-dot">•</span>
-                        <span className="gen-text-item">IMAGES</span>
-                        <span className="gen-text-dot">•</span>
-                        <span className="gen-text-item">AUDIO</span>
-                        <span className="gen-text-dot">•</span>
-                        <span className="gen-text-item">VIDEO</span>
-                    </div>
-                    <div className="gen-text-row">
-                        <span className="gen-text-item">CODE</span>
-                        <span className="gen-text-dot">•</span>
-                        <span className="gen-text-item">DATA & INSIGHTS</span>
-                        <span className="gen-text-dot">•</span>
-                        <span className="gen-text-item">3D & DESIGN ASSETS</span>
-                    </div>
-                    <div className="gen-text-row">
-                        <span className="gen-text-item">KNOWLEDGE STRUCTURES</span>
-                        <span className="gen-text-dot">•</span>
-                        <span className="gen-text-item">SIMULATIONS</span>
-                    </div>
-                    <div className="gen-text-row">
-                        <span className="gen-text-item">VIRTUAL ENVIRONMENTS</span>
-                        <span className="gen-text-dot">•</span>
-                        <span className="gen-text-item">ANIMATION</span>
-                    </div>
                 </div>
             </div>
         </section>

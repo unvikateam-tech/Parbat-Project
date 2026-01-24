@@ -1,10 +1,13 @@
 .modern-overview-section {
-    padding: 0 2rem 0;
-    /* Zero bottom padding to allow Reality BG to take over */
-    margin-top: 0;
+    padding: calc(3rem - 131px) 2rem 0;
+    margin-top: -11.5px;
+    /* Adjusted another 2px down */
     background: transparent;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
+    /* Changed to visible to ensure any upward bleed isn't clipped */
+    z-index: 20;
+    /* Ensure it stays above preceding sections if they overlap */
     font-family: 'Inter', sans-serif;
 }
 
@@ -29,11 +32,7 @@
 .grid-overlay {
     position: absolute;
     inset: 0;
-    background-image:
-        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(circle at center, black, transparent 90%);
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.02) 0%, transparent 70%);
 }
 
 .graffiti-swarm {
@@ -62,49 +61,23 @@
     width: 100%;
     max-width: 1000px;
     background: #000;
-    border-radius: 24px;
+    border-radius: 12px;
+    /* Sharper corners as requested */
     overflow: visible;
-    margin-bottom: 2rem;
+    margin-bottom: 0px;
+    /* Removed padding to pull content below */
     position: relative;
 
-    /* White corners with subtle black shadow */
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    /* Glowing Pink Outline (Removed large background glow) */
+    border: 2px solid #ff248f;
     box-shadow:
-        0 50px 100px -20px rgba(0, 0, 0, 0.9),
-        0 20px 60px rgba(0, 0, 0, 0.6),
-        0 10px 30px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        0 0 15px rgba(255, 36, 143, 0.4),
+        0 50px 100px -20px rgba(0, 0, 0, 0.9);
 
     transition: all 0.4s ease;
 }
 
-/* White corner highlights - Top Left & Bottom Right */
-.video-main-frame::before,
-.video-main-frame::after {
-    content: '';
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    border: 3px solid rgba(255, 255, 255, 0.6);
-    z-index: 10;
-    transition: all 0.3s ease;
-}
-
-.video-main-frame::before {
-    top: -2px;
-    left: -2px;
-    border-right: none;
-    border-bottom: none;
-    border-radius: 24px 0 0 0;
-}
-
-.video-main-frame::after {
-    bottom: -2px;
-    right: -2px;
-    border-left: none;
-    border-top: none;
-    border-radius: 0 0 24px 0;
-}
+/* Removed pseudo-elements for cleaner outline */
 
 .video-main-frame:hover {
     border-color: rgba(255, 255, 255, 0.5);
@@ -126,7 +99,8 @@
     aspect-ratio: 16/9;
     position: relative;
     overflow: hidden;
-    border-radius: 22px;
+    border-radius: 10px;
+    /* Sharper inner corners */
 }
 
 .video-container iframe {
@@ -139,7 +113,8 @@
     position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(8px);
+    backdrop-filter: none;
+    /* Removed blur as requested */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -154,16 +129,18 @@
     background: rgba(0, 0, 0, 0.2);
 }
 
-/* Glassy Play Button - Sandcastles.ai Style */
+/* Glassy Pill Button - Inspired by Uploaded Design */
 .video-play-btn-glass {
-    padding: 1rem 2.5rem;
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    padding: 1.1rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    /* Matches "Try It For Free" casing */
     color: #fff;
-    border: none;
-    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 100px;
+    /* Perfect Pill */
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -171,28 +148,35 @@
     position: relative;
     overflow: hidden;
 
-    /* Solid pink background */
-    background: #ff248f;
+    /* Multi-layered background for the "glowing glass" look */
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.15) 0%,
+            rgba(255, 255, 255, 0) 50%), #ff248f;
 
     box-shadow:
-        0 8px 32px rgba(255, 36, 143, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        0 4px 15px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(255, 36, 143, 0.4),
+        inset 0 1px 1px rgba(255, 255, 255, 0.4),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.2);
 
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .video-play-btn-glass svg {
     fill: #fff;
-    transition: transform 0.3s ease;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.4s ease;
 }
 
 .video-play-btn-glass:hover {
-    transform: translateY(-2px) scale(1.05);
     box-shadow:
-        0 12px 48px rgba(255, 36, 143, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-
-    background: #e91e7f;
+        0 8px 30px rgba(0, 0, 0, 0.5),
+        0 0 50px rgba(255, 36, 143, 0.7),
+        inset 0 1px 2px rgba(255, 255, 255, 0.5);
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.25) 0%,
+            rgba(255, 255, 255, 0) 50%), #ff4db1;
 }
 
 .video-play-btn-glass:hover svg {
@@ -206,13 +190,18 @@
 @media (max-width: 900px) {
     .video-main-frame {
         margin-bottom: 2rem;
-        border-radius: 20px;
+        border-radius: 12px;
     }
 
     .modern-overview-section {
-        padding: 0 1.25rem 0;
-        margin-top: -40px !important;
-        /* Pull up to close space to ticker */
+        padding: calc(3rem - 131px) 1.25rem 0;
+        margin-top: -41.5px !important;
+        /* Adjusted another 2px down */
+    }
+
+    .graffiti-swarm {
+        display: none !important;
+        /* Hide texture on mobile as requested */
     }
 
     .video-play-btn-glass {

@@ -62,9 +62,11 @@ const BenefitCards: React.FC = () => {
         const ctx = gsap.context(() => {
             // Header animation
             gsap.from(".benefit-header", {
-                y: 30,
+                y: 50,
                 opacity: 0,
-                duration: 1,
+                filter: 'blur(20px)',
+                duration: 1.2,
+                ease: "power3.out",
                 scrollTrigger: {
                     trigger: sectionRef.current,
                     start: "top 85%",
@@ -74,11 +76,13 @@ const BenefitCards: React.FC = () => {
 
             // Cards staggered entry
             gsap.from(".benefit-card-vertical", {
-                y: 60,
+                y: 80,
                 opacity: 0,
-                duration: 0.8,
+                scale: 0.8,
+                filter: 'blur(25px)',
+                duration: 1.5,
                 stagger: 0.2,
-                ease: "power2.out",
+                ease: "elastic.out(1, 0.75)",
                 scrollTrigger: {
                     trigger: sectionRef.current,
                     start: "top 75%",

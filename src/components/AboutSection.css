@@ -278,8 +278,7 @@
     left: -20px;
     width: 150px;
     height: 150px;
-    background-image: radial-gradient(rgba(127, 0, 255, 0.1) 1px, transparent 1px);
-    background-size: 15px 15px;
+    background: radial-gradient(circle, rgba(255, 36, 143, 0.05) 0%, transparent 70%);
     z-index: -1;
 }
 

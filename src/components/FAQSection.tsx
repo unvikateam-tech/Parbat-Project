@@ -1,6 +1,10 @@
 "use client";
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './FAQSection.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const faqs = [
     {
@@ -45,37 +49,45 @@ const FAQItem = ({ item, isOpen, onClick }: { item: typeof faqs[0], isOpen: bool
 
 const FAQSection: React.FC = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
-    const [isVisible, setIsVisible] = useState(false);
     const sectionRef = useRef<HTMLElement>(null);
 
     const toggleFAQ = (index: number) => {
         setOpenIndex(openIndex === index ? null : index);
     };
 
-    React.useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                    observer.unobserve(entry.target);
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.from(".faq-header", {
+                y: 50,
+                opacity: 0,
+                filter: 'blur(20px)',
+                duration: 1.2,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top 85%"
                 }
-            },
-            { threshold: 0.1 }
-        );
+            });
 
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
-        }
-
-        return () => {
-            if (sectionRef.current) {
-                observer.unobserve(sectionRef.current);
-            }
-        };
+            gsap.from(".faq-item", {
+                y: 60,
+                opacity: 0,
+                scale: 0.9,
+                filter: 'blur(15px)',
+                duration: 1.2,
+                stagger: 0.1,
+                ease: "elastic.out(1, 0.75)",
+                scrollTrigger: {
+                    trigger: ".faq-list",
+                    start: "top 85%"
+                }
+            });
+        }, sectionRef);
+        return () => ctx.revert();
     }, []);
 
     return (
-        <section className={`faq-section ${isVisible ? 'visible' : ''}`} id="faq" ref={sectionRef}>
+        <section className="faq-section" id="faq" ref={sectionRef}>
             <div className="faq-container">
                 <div className="faq-header">
                     <span className="section-tag">Clarity First</span>
@@ -93,11 +105,9 @@ const FAQSection: React.FC = () => {
                         />
                     ))}
                 </div>
-
             </div>
         </section>
     );
 };
 
 export default FAQSection;
-

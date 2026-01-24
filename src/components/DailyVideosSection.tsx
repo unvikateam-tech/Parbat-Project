@@ -26,10 +26,12 @@ const DailyVideosSection = () => {
     React.useEffect(() => {
         const ctx = gsap.context(() => {
             gsap.from(".dv-card", {
-                y: 60,
+                y: 80,
                 opacity: 0,
-                duration: 1.2,
-                ease: "power3.out",
+                filter: 'blur(20px)',
+                scale: 0.8,
+                duration: 1.5,
+                ease: "elastic.out(1, 0.75)",
                 scrollTrigger: {
                     trigger: sectionRef.current,
                     start: "top 85%",
@@ -39,6 +41,7 @@ const DailyVideosSection = () => {
             gsap.from(".dv-content > *", {
                 x: -30,
                 opacity: 0,
+                filter: 'blur(10px)',
                 duration: 0.8,
                 stagger: 0.1,
                 scrollTrigger: {
@@ -48,11 +51,12 @@ const DailyVideosSection = () => {
             });
 
             gsap.from(".dv-video-wrapper", {
-                scale: 0.9,
+                scale: 0.7,
                 opacity: 0,
-                duration: 1,
-                delay: 0.2,
-                ease: "power2.out",
+                filter: 'blur(20px)',
+                duration: 1.5,
+                delay: 0.3,
+                ease: "elastic.out(1, 0.6)",
                 scrollTrigger: {
                     trigger: sectionRef.current,
                     start: "top 85%",

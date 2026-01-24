@@ -79,8 +79,9 @@
 
 @media (max-width: 1023px) {
   .app-header {
-    top: 45px !important;
-    top: calc(45px + env(safe-area-inset-top)) !important;
+    top: 18px !important;
+    /* Reduced by another 5px for extreme-tight fit */
+    top: calc(18px + env(safe-area-inset-top)) !important;
   }
 }
 
@@ -101,11 +102,11 @@
   justify-content: center;
   align-items: center;
   padding: 0 1.25rem;
-  background: rgba(15, 13, 14, 0.4);
+  background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-radius: 100px;
-  height: 48px;
+  border-radius: 8px;
+  height: 36px;
   width: var(--nav-width);
   max-width: var(--nav-max-width);
   position: relative;
@@ -128,11 +129,11 @@
       transparent 0%,
       transparent 35%,
       rgba(255, 36, 143, 0.6) 45%,
-      var(--brand-pink) 50%,
-      rgba(255, 36, 143, 0.6) 55%,
+      #FF248F 50%,
+      rgba(0, 194, 238, 0.6) 55%,
       transparent 65%,
       transparent 100%);
-  border-radius: 100px;
+  border-radius: 8px;
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
@@ -144,6 +145,64 @@
   z-index: -1;
   animation: revolve-shine 4s linear infinite;
   pointer-events: none;
+  opacity: 0.8;
+}
+
+/* Creamy Light Nav theme for PC */
+@media (min-width: 1024px) {
+  .pill-nav-container {
+    background: #fdfbf7 !important;
+    /* Creamy White */
+    border: 1.5px solid rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .pill-nav-container::before {
+    opacity: 0.4;
+    /* Soften the spin on light bg */
+  }
+
+  .badge-text,
+  .badge-arrow {
+    color: #ffffff !important;
+    text-shadow: 0 1px 4px rgba(0, 0, 10, 0.2);
+  }
+}
+
+/* Reusable 'Join Forces' Style Badge Components */
+.badge-tag {
+  color: var(--brand-pink) !important;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  margin-right: 4px;
+}
+
+.header-logo .badge-tag {
+  font-size: 0.65rem;
+}
+
+.hero-personal-badge .badge-tag {
+  font-size: 0.73rem;
+}
+
+.badge-text {
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.header-logo .badge-text {
+  font-size: 0.7rem;
+}
+
+.badge-arrow {
+  color: #fff;
+  font-size: 1.1rem;
+  margin-left: 6px;
   opacity: 0.8;
 }
 
@@ -192,24 +251,9 @@
   .pill-nav-container {
     width: var(--nav-width);
     max-width: var(--nav-max-width);
-    height: 44px;
-    border-radius: 20px !important;
-    min-width: 0;
-  }
-
-  .pill-main-row {
-    height: 44px;
-  }
-}
-
-@media (max-width: 768px) {
-  .pill-nav-container {
-    width: var(--nav-width) !important;
-    max-width: var(--nav-max-width) !important;
-    border-radius: 20px !important;
-    height: 42px;
-    padding: 0 1rem;
-    border: 1.5px solid var(--brand-pink) !important;
+    height: 32px;
+    border-radius: 8px !important;
+    border: 1.5px solid rgba(0, 0, 0, 0.1) !important;
   }
 
   .pill-nav-container.menu-expanded {
@@ -218,7 +262,23 @@
   }
 
   .pill-main-row {
-    height: 42px;
+    height: 44px;
+  }
+
+  .menu-btn {
+    color: #ffffff !important;
+    /* Reverted to white as requested */
+  }
+}
+
+@media (max-width: 768px) {
+  .pill-nav-container {
+    width: var(--nav-width) !important;
+    max-width: var(--nav-max-width) !important;
+    border-radius: 8px !important;
+    height: 30px;
+    padding: 0 0.85rem;
+    border: 1.5px solid var(--brand-pink) !important;
   }
 }
 
@@ -251,10 +311,8 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
+  background: #000;
+  /* Pure black foundation */
   pointer-events: none;
   z-index: 0;
 }
@@ -551,13 +609,56 @@ h1 {
 .header-logo {
   display: flex;
   align-items: center;
-  gap: 12px;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  text-decoration: none !important;
+  transition: all 0.3s ease;
 }
 
-.header-logo:hover {
-  transform: translateY(-1px);
+.mobile-logo-text {
+  display: block;
+  font-family: var(--font-header);
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.pink-underscore {
+  color: var(--brand-pink);
+}
+
+.desktop-logo-badge {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .mobile-logo-text {
+    display: none;
+  }
+
+  .desktop-logo-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .header-logo {
+    padding: 2px 7px;
+    border-radius: 8px;
+    border: 1.5px solid transparent;
+    background: linear-gradient(#000, #000) padding-box,
+      linear-gradient(90deg, #00C2EE, #00f5a0) border-box;
+  }
+
+  .header-logo:hover {
+    transform: translateY(-1px);
+  }
+
+  .header-logo:hover .badge-text,
+  .header-logo:hover .badge-arrow {
+    color: var(--brand-pink) !important;
+  }
 }
 
 .logo-avatar {
@@ -609,7 +710,7 @@ h1 {
 
 .brand-name {
   font-family: var(--font-header);
-  font-size: 0.8rem;
+  font-size: 0.73rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -819,7 +920,8 @@ h1 {
   line-height: 1.05 !important;
   letter-spacing: 0.04em !important;
   text-transform: uppercase;
-  color: #fff;
+  color: #fdfbf7;
+  /* Cream White */
   z-index: 10;
   position: relative;
   text-align: center;
@@ -833,18 +935,22 @@ h1 {
   display: flex;
   align-items: center;
   gap: 0.85rem;
-  padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 9999px;
+  padding: 0.25rem 0.7rem;
+  background: #000;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1.5px solid transparent;
+  background: linear-gradient(#000, #000) padding-box,
+    linear-gradient(90deg, #00C2EE, #00f5a0) border-box;
+  border-radius: 8px;
   margin-bottom: 1.5rem;
-  /* Tighter */
   opacity: 0;
   visibility: hidden;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(0, 194, 238, 0.15);
+  /* Subtle pink aura */
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
 }
@@ -879,9 +985,9 @@ h1 {
 }
 
 .hero-badge-avatar {
-  width: 40px;
+  width: 26px;
   /* Refined */
-  height: 40px;
+  height: 26px;
   border-radius: 50%;
   border: 2px solid var(--brand-pink);
   object-fit: cover;
@@ -896,34 +1002,32 @@ h1 {
 .hero-badge-name {
   font-family: var(--font-header);
   font-size: 0.85rem;
-  font-weight: 800;
+  font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--brand-pink);
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
-  -webkit-text-stroke: 0.1px white;
+  letter-spacing: 0.06em;
+  color: #fff;
+  /* Pure white for clarity */
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   display: block;
 }
 
 .hero-badge-title {
   font-family: var(--font-outfit);
-  font-size: 0.65rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  /* Brighter for readability */
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-top: 4px;
+  letter-spacing: 0.12em;
+  margin-top: 5px;
   display: block;
 }
 
 .tagline-highlight {
-  background: rgba(255, 36, 143, 0.6);
-  /* Slightly more saturated for better contrast with white text */
-  color: #ffffff !important;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-weight: 800;
-  border: 1px solid rgba(255, 36, 143, 0.3);
+  color: var(--brand-pink) !important;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-right: 6px;
 }
 
 @media (max-width: 768px) {
@@ -966,6 +1070,10 @@ h1 {
     /* Reduced by another 5px approx */
   }
 
+  .hero-buttons {
+    transform: translateX(-2.5px);
+  }
+
   .hero-description,
   .trusted-pill-container {
     display: none !important;
@@ -973,8 +1081,7 @@ h1 {
 
   .hero-badge-name {
     color: #fff !important;
-    -webkit-text-stroke: 0 !important;
-    text-shadow: none !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
   }
 }
 
@@ -1000,12 +1107,13 @@ h1 {
   }
 
   .hero {
-    padding-top: 5.2rem !important;
-    /* Reduced by another 5px approx */
+    padding-top: 0 !important;
+    /* Removed all padding for tightest layout */
   }
 
   .hero-headline {
-    margin-top: 0 !important;
+    margin-top: -41px !important;
+    /* Pushed up another 5px */
     margin-bottom: 0.5rem !important;
     font-size: clamp(2rem, 9vw, 3rem) !important;
   }
@@ -1036,12 +1144,13 @@ h1 {
   }
 
   .hero-buttons {
-    margin-top: 0.25rem !important;
+    margin-top: calc(0.25rem - 1px) !important;
+    /* Pushed 2px more down while keeping rest stationary */
   }
 
   .hero-bottom-separator {
-    margin-top: 0.5rem !important;
-    /* Bring ticker closer */
+    margin-top: calc(0.5rem - 31px) !important;
+    /* Pulled up another 7px to keep stationary while content below moves up */
   }
 }
 
@@ -1149,8 +1258,8 @@ h1 {
   }
 
   .trusted-pill-container {
-    margin-top: -12px !important;
-    /* Heavier pull up */
+    margin-top: -32px !important;
+    /* Pulled up further towards nav bar */
     margin-bottom: 0.1rem !important;
     /* Absolute minimum space */
   }
@@ -1184,6 +1293,11 @@ h1 {
 
   .hero-video-centered {
     margin-top: 0;
+  }
+
+  .hero-content {
+    margin-top: -38px !important;
+    /* Pulled up another 5px */
   }
 }
 
@@ -1273,30 +1387,36 @@ h1 {
 }
 
 .primary-btn {
-  background: var(--brand-pink);
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0) 50%), var(--brand-pink);
   color: #ffffff;
-  border: none;
-  padding: 0.8rem 2.5rem;
-  /* Smaller padding */
-  font-size: 0.95rem;
-  /* Smaller font size */
-  font-weight: 850;
-  /* Extra bold */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.85rem 2.8rem;
+  /* Increased width */
+  font-size: 1rem;
+  font-weight: 800;
   border-radius: 9999px;
-  /* Capsule Shape (MrBeast) */
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  font-family: var(--font-mono);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  text-transform: none;
+  /* Premium casing */
+  letter-spacing: -0.01em;
+  font-family: var(--font-main);
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(255, 36, 143, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .primary-btn:hover {
-  background: var(--brand-pink);
-  color: #ffffff;
-  transform: translateY(-4px) scale(1.02);
-  /* Optional: Enhance shadow/glow instead of changing color */
-  box-shadow: 0 20px 50px rgba(255, 36, 143, 0.4);
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.5),
+    0 0 50px rgba(255, 36, 143, 0.7),
+    inset 0 1px 2px rgba(255, 255, 255, 0.5);
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.25) 0%,
+      rgba(255, 255, 255, 0) 50%), #ff4db1;
 }
 
 .pulse-glow {

@@ -489,8 +489,14 @@ const TestimonialSection: React.FC = () => {
     useEffect(() => {
         if (animDone.current || allThoughts.length === 0) return;
         const ctx = gsap.context(() => {
-            gsap.fromTo(".thoughts-title", { opacity: 0, y: 30 }, { opacity: 1, y: 0, scrollTrigger: { trigger: sectionRef.current, start: "top 80%" } });
-            gsap.fromTo(".thought-card-v2", { opacity: 0, scale: 0.9, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.8, stagger: 0.1, delay: 0.2, scrollTrigger: { trigger: ".thoughts-grid", start: "top 85%" } });
+            gsap.fromTo(".thoughts-title",
+                { opacity: 0, y: 30, filter: 'blur(10px)' },
+                { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1, scrollTrigger: { trigger: sectionRef.current, start: "top 80%" } }
+            );
+            gsap.fromTo(".thought-card-v2",
+                { opacity: 0, scale: 0.8, y: 50, filter: 'blur(20px)' },
+                { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)', duration: 1.2, stagger: 0.1, delay: 0.2, ease: "elastic.out(1, 0.75)", scrollTrigger: { trigger: ".thoughts-grid", start: "top 85%" } }
+            );
         }, sectionRef);
         animDone.current = true;
         return () => ctx.revert();

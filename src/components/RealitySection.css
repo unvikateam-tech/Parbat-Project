@@ -5,13 +5,13 @@
 
 .reality-section-wrapper {
     position: relative;
-    margin-top: -120px;
-    /* Pull the BG up to where graffiti starts fading */
-    padding: 5rem 1rem 6rem;
-    /* Top padding increased to 'down the headline' */
-    background: #000000;
-    overflow: hidden;
-    z-index: 1;
+    margin-top: -32px;
+    /* Adjusted 4px down to add more space */
+    padding: 0 1rem 0rem;
+    background: #000 !important;
+    overflow: visible;
+    z-index: 30;
+    /* Set higher than Video section (20) to clear shadows */
 }
 
 /* 
@@ -21,12 +21,9 @@
 .bg-tech-grid {
     position: absolute;
     inset: 0;
-    background-image:
-        linear-gradient(rgba(255, 36, 143, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 36, 143, 0.05) 1px, transparent 1px);
-    background-size: 40px 40px;
+    background: radial-gradient(circle at 10% 20%, rgba(255, 36, 143, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 194, 238, 0.03) 0%, transparent 40%);
     z-index: 0;
-    mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
 }
 
 .reality-container {
@@ -207,8 +204,11 @@
 
 .new-reality-header {
     width: 100%;
-    padding: 10rem 0;
-    margin-bottom: 4rem;
+    padding: 4rem 0 0 0;
+    margin-bottom: 0rem;
+    min-height: 560px;
+    border-bottom: 2px solid var(--brand-pink);
+    /* Vibrant pink separator */
     position: relative;
     display: flex;
     flex-direction: column;
@@ -230,6 +230,8 @@
     padding-left: 5%;
     position: relative;
     z-index: 5;
+    transform: translateY(-12px);
+    /* Pushed total 12px above (5px + 7px) as requested */
 }
 
 .glass-pill-container {
@@ -260,25 +262,23 @@
 
 .header-bg-image img {
     position: absolute;
-    right: 2%;
-    /* Bring it in from the far edge */
+    left: 0;
+    right: auto;
+    /* Pushed to the left as requested */
     top: 50%;
     transform: translateY(-50%);
     height: 85%;
-    /* Keep it within the height of the section to prevent cropping */
     width: auto;
     object-fit: contain;
-    /* Ensure the whole subject is visible */
     opacity: 0.6;
-    /* Soft blend rather than hard crop */
-    mask-image: linear-gradient(to left,
-            rgba(0, 0, 0, 1) 0%,
-            rgba(0, 0, 0, 0.4) 40%,
-            rgba(0, 0, 0, 0) 80%);
-    -webkit-mask-image: linear-gradient(to left,
-            rgba(0, 0, 0, 1) 0%,
-            rgba(0, 0, 0, 0.4) 40%,
-            rgba(0, 0, 0, 0) 80%);
+    mask-image:
+        linear-gradient(to right, transparent 0%, black 15%, black 60%, transparent 100%),
+        linear-gradient(to top, transparent 0%, black 20%);
+    -webkit-mask-image:
+        linear-gradient(to right, transparent 0%, black 15%, black 60%, transparent 100%),
+        linear-gradient(to top, transparent 0%, black 20%);
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
     filter: brightness(1.1) contrast(1.1);
     transition: opacity 0.3s ease;
 }
@@ -315,7 +315,7 @@
     line-height: 1.05;
     color: #fff;
     text-transform: uppercase;
-    margin-bottom: 2.2rem;
+    margin-bottom: 1rem;
     position: relative;
     z-index: 3;
     letter-spacing: -0.02em;
@@ -343,7 +343,7 @@
 
 /* Text Only UI for Generations */
 .generations-text-ui {
-    margin-top: 4rem;
+    margin-top: 0;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -673,8 +673,9 @@
     }
 
     .reality-section-wrapper {
-        margin-top: -80px !important;
-        padding-top: 4rem !important;
+        margin-top: -67px !important;
+        /* Adjusted 4px more down only on mobile */
+        padding-top: 0 !important;
     }
 
     .reality-header:not(.new-reality-header) {
@@ -699,12 +700,12 @@
     }
 
     .new-reality-header {
-        padding: 4rem 0 0 0 !important;
+        padding: 0 !important;
         /* Reduced bottom padding to zero */
-        align-items: center !important;
-        text-align: center !important;
-        min-height: 300px !important;
-        /* Reduced min-height */
+        align-items: flex-start !important;
+        text-align: left !important;
+        min-height: 480px !important;
+        /* Increased min-height for mobile as requested */
     }
 
     .new-reality-content {
@@ -713,8 +714,8 @@
     }
 
     .reality-desc {
-        margin-left: auto;
-        margin-right: auto;
+        margin-left: 0;
+        margin-right: 0;
     }
 
     .desktop-bg {
@@ -731,7 +732,12 @@
         transform: none !important;
         object-fit: cover !important;
         opacity: 0.55 !important;
-        mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent) !important;
-        -webkit-mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent) !important;
+        mask-image:
+            linear-gradient(to bottom, transparent, black 10%, black 90%, transparent),
+            linear-gradient(to left, transparent, black 15%) !important;
+        -webkit-mask-image:
+            linear-gradient(to bottom, transparent, black 10%, black 90%, transparent),
+            linear-gradient(to left, transparent, black 15%) !important;
+        mask-composite: intersect !important;
     }
 }

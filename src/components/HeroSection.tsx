@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { trackCTAClick, trackVideoPlay } from '../lib/analytics';
 import ProblemSolutionTicker from './ProblemSolutionTicker';
+import PillNav from './PillNav';
 
 const HeroSection: React.FC = () => {
     const heroRef = useRef<HTMLElement>(null);
@@ -27,7 +28,7 @@ const HeroSection: React.FC = () => {
                 ".hero-bottom-separator",
                 ".collage-item",
                 ".trusted-pill-container",
-                ".hero-personal-badge"
+                ".hp-pill-nav-container"
             ];
             gsap.set(elementsToHide, { autoAlpha: 0 });
 
@@ -56,29 +57,29 @@ const HeroSection: React.FC = () => {
                 }, "-=0.7")
 
                 // Main Content Block Rise
-                .fromTo(".hero-personal-badge",
-                    { y: 30, autoAlpha: 0 },
-                    { y: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out" },
+                .fromTo(".hp-pill-nav-container",
+                    { y: 30, autoAlpha: 0, filter: 'blur(10px)' },
+                    { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: "elastic.out(1, 0.8)" },
                     "-=0.6"
                 )
                 .fromTo(".hero-headline",
-                    { y: 50, autoAlpha: 0 },
-                    { y: 0, autoAlpha: 1, duration: 0.7, ease: "power3.out" },
+                    { y: 60, autoAlpha: 0, filter: 'blur(20px)', scale: 0.8 },
+                    { y: 0, autoAlpha: 1, filter: 'blur(0px)', scale: 1, duration: 1.5, ease: "elastic.out(1, 0.5)" },
                     "-=0.5"
                 )
                 .fromTo(".hero-description",
-                    { y: 30, autoAlpha: 0 },
-                    { y: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out" },
-                    "-=0.5"
+                    { y: 30, autoAlpha: 0, filter: 'blur(10px)' },
+                    { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: "power3.out" },
+                    "-=0.7"
                 )
                 .fromTo(".hero-buttons",
-                    { y: 20, autoAlpha: 0 },
-                    { y: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out" },
-                    "-=0.5"
+                    { y: 20, autoAlpha: 0, filter: 'blur(10px)', scale: 0.8 },
+                    { y: 0, autoAlpha: 1, filter: 'blur(0px)', scale: 1, duration: 1.2, ease: "elastic.out(1, 0.6)" },
+                    "-=0.6"
                 )
                 .fromTo(".hero-bottom-separator",
-                    { y: 30, autoAlpha: 0 },
-                    { y: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out" },
+                    { y: 30, autoAlpha: 0, filter: 'blur(5px)' },
+                    { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.6, ease: "power3.out" },
                     "-=0.5"
                 );
 
@@ -123,16 +124,24 @@ const HeroSection: React.FC = () => {
             </div>
 
             <div className="hero-content">
-                {/* Premium Personal Badge Identity */}
-                <div className="hero-personal-badge">
-                    <img src="/avatar_me.png" alt="Parbat Paudel" className="hero-badge-avatar" />
-                    <div className="hero-badge-info">
-                        <span className="hero-badge-name">Parbat Raj Paudel</span>
-                        <span className="hero-badge-title">
-                            <span className="tagline-highlight">Gen AI Executor</span>
-                        </span>
-                    </div>
-                </div>
+                {/* Pill Nav Replacement for Header */}
+                <PillNav
+                    items={[
+                        { label: 'Home', href: '/' },
+                        { label: 'About', href: '#reality-section' },
+                        { label: 'Services', href: '/packages' },
+                        { label: 'Contact', href: '/contact' }
+                    ]}
+                    activeHref="/"
+                    className="custom-nav hp-desktop-only"
+                    ease="power2.easeOut"
+                    baseColor="#fdfbf7"
+                    pillColor="#FF248F"
+                    hoveredPillTextColor="#FF248F"
+                    pillTextColor="#ffffff"
+                    theme="light"
+                    initialLoadAnimation={false}
+                />
 
                 {/* Trusted By Pill (Hidden on Desktop via CSS) */}
                 <div className="trusted-pill-container">
